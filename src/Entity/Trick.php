@@ -56,9 +56,15 @@ class Trick
      */
     private $discussions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Media::class, mappedBy="trick", orphanRemoval=true)
+     */
+    private $media;
+
     public function __construct()
     {
         $this->discussions = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -162,6 +168,36 @@ class Trick
             // set the owning side to null (unless already changed)
             if ($discussion->getTrick() === $this) {
                 $discussion->setTrick(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+            $medium->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->removeElement($medium)) {
+            // set the owning side to null (unless already changed)
+            if ($medium->getTrick() === $this) {
+                $medium->setTrick(null);
             }
         }
 
