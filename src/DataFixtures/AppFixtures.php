@@ -58,6 +58,7 @@ class AppFixtures extends Fixture
         $trick->setUpdatedDate(new \DateTime());
         $manager->persist($trick);
         $this->disscussionFixtures($manager,$trick,$users);
+        $this->addMedia($manager,$trick,"https://www.youtube.com/watch?v=jm19nEvmZgM");
 
         $trick = new Trick();
         $trick->setUser($users[array_rand($users)]);
@@ -189,5 +190,13 @@ class AppFixtures extends Fixture
             $datetime = clone $datetime;
             $manager->persist($discussion);
         }
+    }
+
+    private function addMedia(ObjectManager $manager, Trick $trick, string $link) : void
+    {
+        $media = new Media();
+        $media->setTrick($trick);
+        $media->setLink($link);
+        $manager->persist($media);
     }
 }
