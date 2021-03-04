@@ -11,7 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet e-mail")
+ * @UniqueEntity(fields={"fullname"}, message="Il existe déjà un compte avec ce nom complet")
  */
 class User implements UserInterface
 {
@@ -39,24 +40,9 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=true)
      */
     private $fullname;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $email_verified;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $email_code;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $email_code_date;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -95,7 +81,6 @@ class User implements UserInterface
         $this->created_date = new \DateTime();
         $this->updated_date = new \DateTime();
         $this->picture_link = "";
-        $this->email_verified = false;
     }
 
     public function getId(): ?int
@@ -122,7 +107,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->fullname;
     }
 
     /**
@@ -187,42 +172,6 @@ class User implements UserInterface
     public function setFullname(string $fullname): self
     {
         $this->fullname = $fullname;
-
-        return $this;
-    }
-
-    public function getEmailVerified(): ?bool
-    {
-        return $this->email_verified;
-    }
-
-    public function setEmailVerified(bool $email_verified): self
-    {
-        $this->email_verified = $email_verified;
-
-        return $this;
-    }
-
-    public function getEmailCode(): ?string
-    {
-        return $this->email_code;
-    }
-
-    public function setEmailCode(?string $email_code): self
-    {
-        $this->email_code = $email_code;
-
-        return $this;
-    }
-
-    public function getEmailCodeDate(): ?\DateTimeInterface
-    {
-        return $this->email_code_date;
-    }
-
-    public function setEmailCodeDate(?\DateTimeInterface $email_code_date): self
-    {
-        $this->email_code_date = $email_code_date;
 
         return $this;
     }
