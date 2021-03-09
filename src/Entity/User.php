@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet e-mail")
- * @UniqueEntity(fields={"fullname"}, message="Il existe déjà un compte avec ce nom complet")
+ * @UniqueEntity(fields={"username"}, message="Il existe déjà un compte avec ce nom complet")
  */
 class User implements UserInterface
 {
@@ -42,7 +42,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=50, unique=true)
      */
-    private $fullname;
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -107,7 +107,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->fullname;
+        return (string) $this->username;
     }
 
     /**
@@ -164,14 +164,9 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFullname(): ?string
+    public function setUsername(string $username): self
     {
-        return $this->fullname;
-    }
-
-    public function setFullname(string $fullname): self
-    {
-        $this->fullname = $fullname;
+        $this->username = $username;
 
         return $this;
     }
