@@ -5,15 +5,10 @@ html {
 /* header */
 
 #header {
-	background-image: url(images/bg-header.png);
+	/* background-image: url(/images/bg-header.png); */
     background-size: auto 100vh;
 	background-position: top 65px center;
 	background-repeat: no-repeat;
-	/* min-height:100vh; */
-}
-
-#header .navbar-brand {
-	/* line-height:unset; */
 }
 
 .bg-opacity, #header .navbar .show, #header .navbar .collapsing {
@@ -66,13 +61,6 @@ html {
 	.medias__img {
 		max-height:98px;
 	}
-}
-
-
-/* content */
-
-#content {
-	/* background-color: rgba(248, 249, 250, 0.5); */
 }
 
 /* chat */
