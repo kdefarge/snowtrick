@@ -10,10 +10,10 @@
     
         <ul class="navbar-nav ml-auto bg-light">
             <li class="nav-item active">
-                <a class="nav-link" href="#"><img src="{{ asset('images/theme/m-home.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Accueil<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ path('homepage') }}"><img src="{{ asset('images/theme/m-home.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Accueil<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#tricks"><img src="{{ asset('images/theme/m-tricks.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Tricks</a>
+                <a class="nav-link" href="{{ path('homepage') }}#tricks"><img src="{{ asset('images/theme/m-tricks.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Tricks</a>
             </li>
 
             {% if app.user %}
