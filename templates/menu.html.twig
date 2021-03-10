@@ -10,23 +10,31 @@
     
         <ul class="navbar-nav ml-auto bg-light">
             <li class="nav-item active">
-                <a class="nav-link" href="index.html"><img src="{{ asset('images/theme/m-home.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Accueil<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#"><img src="{{ asset('images/theme/m-home.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Accueil<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#tricks"><img src="{{ asset('images/theme/m-tricks.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Tricks</a>
             </li>
+
+            {% if app.user %}
+
             <li class="nav-item">
-                <a class="nav-link" href="#"><img src="{{ asset('images/theme/m-signin.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Connexion</a>
+                <a class="nav-link" href="#"><img src="{{ asset('images/theme/m-account.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Mon compte</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><img src="{{ asset('images/theme/m-signup.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Enregistrement</a>
+                <a class="nav-link" href="{{ path('app_logout') }}"><img src="{{ asset('images/theme/m-logout.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Déconnexion</a>
             </li>
-            <!-- <li class="nav-item"> -->
-                <!-- <a class="nav-link" href="#"><img src="{{ asset('images/theme/m-account.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Mon compte</a> -->
-            <!-- </li> -->
-            <!-- <li class="nav-item"> -->
-                <!-- <a class="nav-link" href="#"><img src="{{ asset('images/theme/m-logout.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Déconnexion</a> -->
-            <!-- </li> -->
+
+            {% else %}
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_login') }}"><img src="{{ asset('images/theme/m-signin.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Connexion</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_register') }}"><img src="{{ asset('images/theme/m-signup.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Enregistrement</a>
+            </li>
+
+            {% endif %}
         </ul>
     </div>
 </nav>
