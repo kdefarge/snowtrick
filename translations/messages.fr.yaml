@@ -1,0 +1,20 @@
+user:
+  username:
+    label: "Nom d'utilisateur :"    
+    notfound: Aucun utilisateur trouvé.
+  newpassword:
+    label: "Nouveau mot de passe :"
+  repeatpassword: 
+    label: "Répéter le mot de passe :"
+form:
+  send : Envoyer
+  resetpassword : 
+    request :
+      title : Réinitialisez votre mot de passe
+      info : Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+    emailsent :
+      title : E-mail de réinitialisation du mot de passe envoyé
+    reset :
+      title : réinitialisez votre mot de passe
+      button : Réinitialiser le mot de passe
+      linknovalid : Un problème est survenu lors de la validation de votre demande de réinitialisation
