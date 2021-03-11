@@ -1,12 +1,26 @@
-{% extends 'base.html.twig' %}
+{% extends 'simplebase.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}{{ 'form.resetpassword.reset.title'|trans }}{% endblock %}
 
-{% block body %}
-    <h1>Reset your password</h1>
+{% block simplebase %}
 
-    {{ form_start(resetForm) }}
+{{ form_start(resetForm) }}
+
+<div class="row justify-content-center">
+    <div class="col-12">
+        <h1 class="mb-3 text-center">{{ 'form.resetpassword.reset.title'|trans }}</h1>
+    </div>
+
+    <div class="col-10 col-sm-8 col-md-7 col-lg-5 border text-center bg-light py-3 px-sm-5">
+    
         {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
+        
+        <button class="btn btn-primary">{{ 'form.resetpassword.reset.button'|trans }}</button>
+        
+    </div>
+
+</div>
+
+{{ form_end(resetForm) }}
+
 {% endblock %}
