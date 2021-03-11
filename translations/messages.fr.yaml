@@ -1,3 +1,5 @@
+word:
+  delete: Supprimer
 user:
   username:
     label: "Nom d'utilisateur :"    
@@ -6,6 +8,11 @@ user:
     label: "Nouveau mot de passe :"
   repeatpassword: 
     label: "Répéter le mot de passe :"
+  needed: Vous devez être connecté pour accéder à cette page !
+  restricted: Vous ne devez pas être connecté pour accéder à cette page !
+  account:
+    title: Mon compte
+  deleted: Votre compte vient d'être supprimé !
 form:
   send : Envoyer
   resetpassword : 
