@@ -8,7 +8,10 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * @Route("/user")
@@ -29,17 +32,32 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        if(!$this->isGranted('ROLE_USER')) {
+
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
+        $user = $this->getUser();
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $encodedPassword = $passwordEncoder->encodePassword(
+                $user,
+                $form->get('plainPassword')->getData()
+            );
+
+            $user->setPassword($encodedPassword);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('user_account');
         }
 
         return $this->render('user/edit.html.twig', [
@@ -51,19 +69,20 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user_delete", methods={"DELETE"})
      */
-    public function delete(Request $request): Response
+    public function delete(Request $request, SessionInterface $session): Response
     {
         if($this->isGranted('ROLE_USER')) {
 
             $user = $this->getUser();
 
-            return $this->render('user/show.html.twig', ['user' => $this->getUser()]);
             if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+
+                $this->get('security.token_storage')->setToken(null);
+                $session->invalidate(0);
+
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->remove($user);
                 $entityManager->flush();
-
-                $token = $this->get('security.token_storage')->getToken()->setAuthenticated(false);
 
                 $this->addFlash('danger', 'user.deleted');
                 return $this->redirectToRoute('homepage');

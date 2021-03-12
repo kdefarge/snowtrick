@@ -13,8 +13,13 @@ user:
   account:
     title: Mon compte
   deleted: Votre compte vient d'être supprimé !
+  edit:
+    title: Modification de mon compte
+  email:
+    label: "Adresse email :"
 form:
   send : Envoyer
+  edit : Modifier
   resetpassword : 
     request :
       title : Réinitialisez votre mot de passe
