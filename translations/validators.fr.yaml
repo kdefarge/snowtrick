@@ -9,5 +9,6 @@ user:
     max: Votre mot de passe doit comporter au plus {{ limit }} caractères'
   repeatpassword:
     notmatch: "Les champs du mot de passe doivent correspondre."
-
-    
+  email:
+    notblank: Veuillez entrer une adresse e-mail.
+    notvalid: Cette valeur n\'est pas une adresse e-mail valide.
