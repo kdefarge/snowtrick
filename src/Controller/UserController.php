@@ -75,7 +75,7 @@ class UserController extends AbstractController
 
             $user = $this->getUser();
 
-            if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            if ($this->isCsrfTokenValid('delete-account', $request->request->get('_token'))) {
 
                 $this->get('security.token_storage')->setToken(null);
                 $session->invalidate(0);
