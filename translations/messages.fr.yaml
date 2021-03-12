@@ -20,6 +20,8 @@ user:
 form:
   send : Envoyer
   edit : Modifier
+  confirm :
+    delete : Êtes-vous sûr de bien vouloir supprimer cet élément?
   resetpassword : 
     request :
       title : Réinitialisez votre mot de passe
