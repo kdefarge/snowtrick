@@ -1,0 +1,6 @@
+App\Entity\User:
+  user{1..20}:
+    username (unique): <username()>
+    email (unique): <email()>
+    password: <helpEncodePassword('toctoc')>
+    picture_link: <imageUrl(200,200, 'cats', true, 'Faker')>
