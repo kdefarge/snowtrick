@@ -70,6 +70,8 @@ class Trick
     {
         $this->discussions = new ArrayCollection();
         $this->media = new ArrayCollection();
+        $this->created_date = new \DateTime();
+        $this->updated_date = new \DateTime();
     }
 
     public function getId(): ?int
