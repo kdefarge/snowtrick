@@ -1,0 +1,4 @@
+App\Entity\Media:
+  media_{1..200}:
+    trick: '@trick_<numberBetween(1,50)>'
+    link: <imageUrl(1920,1080, 'media', true)>

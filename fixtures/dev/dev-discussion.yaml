@@ -1,0 +1,6 @@
+App\Entity\Discussion:
+  Discussion_{1..1000}:
+    user: '@user_<numberBetween(1,20)>'
+    trick: '@trick_<numberBetween(1,50)>'
+    message: <paragraph(3,true)>
+    created_date: <dateTime()>

@@ -4,3 +4,5 @@ App\Entity\User:
     email (unique): <email()>
     password: <helpEncodePassword('toctoc')>
     picture_link: <imageUrl(200,200, 'cats', true, 'Faker')>
+    created_date: <dateTime()>
+    updated_date: <dateTime()>
