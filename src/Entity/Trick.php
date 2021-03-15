@@ -61,6 +61,11 @@ class Trick
      */
     private $media;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Media::class, orphanRemoval=false)
+     */
+    private $featured_media;
+
     public function __construct()
     {
         $this->discussions = new ArrayCollection();
@@ -200,6 +205,18 @@ class Trick
                 $medium->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFeaturedMedia(): ?Media
+    {
+        return $this->featured_media;
+    }
+
+    public function setFeaturedMedia(?Media $featured_media): self
+    {
+        $this->featured_media = $featured_media;
 
         return $this;
     }
