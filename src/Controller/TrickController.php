@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
@@ -30,16 +31,32 @@ class TrickController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        if(!$this->isGranted('ROLE_USER')) {
+
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager = $this->getDoctrine()->getManager();
+
+            $trick->setUser($this->getUser());
+            $newcategory = $form->get('newcategory')->getData();
+            if('' !== $newcategory && null !== $newcategory) {
+                $category = new Category();
+                $category->setName($newcategory);
+                $trick->setCategory($category);
+                $entityManager->persist($category);
+            }
             $entityManager->persist($trick);
             $entityManager->flush();
 
-            return $this->redirectToRoute('trick_index');
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render('trick/new.html.twig', [
