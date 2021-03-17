@@ -32,7 +32,6 @@ class TrickController extends AbstractController
     public function new(Request $request): Response
     {
         if(!$this->isGranted('ROLE_USER')) {
-
             $this->addFlash('warning', 'user.needed');
             return $this->redirectToRoute('homepage');
         }
@@ -80,11 +79,35 @@ class TrickController extends AbstractController
      */
     public function edit(Request $request, Trick $trick): Response
     {
+        if(!$this->isGranted('ROLE_USER')) {
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
+        $user = $this->getUser();
+
+        if($user->getId()!=$trick->getUser()->getId()) {
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+        
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $trick->setUser($this->getUser());
+            $newcategory = $form->get('newcategory')->getData();
+            if('' !== $newcategory && null !== $newcategory) {
+                $category = new Category();
+                $category->setName($newcategory);
+                $trick->setCategory($category);
+                $entityManager->persist($category);
+                //supprimer les catégories non rataché
+            }
+            $entityManager->persist($trick);
+            $entityManager->flush();
 
             return $this->redirectToRoute('trick_index');
         }
@@ -100,7 +123,19 @@ class TrickController extends AbstractController
      */
     public function delete(Request $request, Trick $trick): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
+        if(!$this->isGranted('ROLE_USER')) {
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
+        $user = $this->getUser();
+
+        if($user->getId()!=$trick->getUser()->getId()) {
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
+        if ($this->isCsrfTokenValid('delete', $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($trick);
             $entityManager->flush();
