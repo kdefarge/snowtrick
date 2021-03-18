@@ -26,8 +26,11 @@
         {% for trick in tricks %}
         <div class="col">
             <div class="border mb-4">
-                {# <img src="images/media.jpg" class="medias__img" alt=""> #}
-                
+                {% if trick.featuredMedia is defined %}
+                <img src="{{ trick.featuredMedia.link }}" class="medias__img" alt="">
+                {% else %}
+                <img src="{{ asset('images/no-image.png') }}" class="medias__img" alt="">
+                {% endif %}
                 <div class="d-flex justify-content-end">
                     <a class="flex-grow-1 align-self-center ml-2 text-break" href="{{ path('trick_show', {'id': trick.id}) }}">
                         {{ trick.name }}
