@@ -1,38 +1,133 @@
-{% extends 'base.html.twig' %}
+{% extends 'simplebase.html.twig' %}
 
-{% block title %}Trick{% endblock %}
+{% block title %}Register{% endblock %}
 
-{% block body %}
-    <h1>Trick</h1>
+{% block simplebase %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ trick.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ trick.name }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ trick.content }}</td>
-            </tr>
-            <tr>
-                <th>Created_date</th>
-                <td>{{ trick.createdDate ? trick.createdDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updated_date</th>
-                <td>{{ trick.updatedDate ? trick.updatedDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div  id="content" class="border border-bottom-0 text-center pb-5">
+				
+<div class="trick__header d-flex flex-column justify-content-between bg-secondary py-2" style="background-image: url();">
+        
+    <div class="align-self-end bg-light mr-2">
+    
+        <a href="{{ path('trick_edit', {'id': trick.id}) }}"><img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+        
+        <a href="{{ path('trick_delete', {'id': trick.id}) }}"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+        
+    </div>
+    
+    <h1 class="bg-light bg-opacity text-break">{{ trick.name }}</h1>
+    
+    <div class="my-2 imgMenu"></div>
+</div>
 
-    <a href="{{ path('trick_index') }}">back to list</a>
+        
+<div class="navbar-expand-lg">
 
-    <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
+    <div id="medias" class="collapse navbar-collapse">
+        <div class="container-fluid p-0">
+            <div class="row row-cols-1 row-cols-lg-4 row-cols-xl-6 justify-content-md-center m-2">
+                
+                <div class="col p-1 d-flex align-items-center justify-content-center container-fluid flex-column">
+                    <div class="col p-0">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/SQyTWk7OxSI" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end w-100">
+                        <div class="border w-60">
+                            <a href="#"><img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+                            <a href="#"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col p-1 d-flex align-items-center justify-content-center container-fluid flex-column">
+                    <a href="#" class="col flex-grow-1 d-flex align-items-center justify-content-center px-0"><img src="images/bg-test3.png" class="medias__img" alt=""></a>
+                    <div class="d-flex justify-content-end w-100">
+                        <div class="border w-60">
+                            <a href="#"><img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+                            <a href="#"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col p-1 d-flex align-items-center justify-content-center container-fluid flex-column">
+                    <a href="#" class="col flex-grow-1 d-flex align-items-center justify-content-center px-0"><img src="images/bg-test.png" class="medias__img" alt=""></a>
+                    <div class="d-flex justify-content-end w-100">
+                        <div class="border w-60">
+                            <a href="#"><img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+                            <a href="#"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col p-1 d-flex align-items-center justify-content-center container-fluid flex-column">
+                    <a href="#" class="col flex-grow-1 d-flex align-items-center justify-content-center px-0"><img src="images/bg-test.png" class="medias__img" alt=""></a>
+                    <div class="d-flex justify-content-end w-100">
+                        <div class="border w-60">
+                            <a href="#"><img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+                            <a href="#"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    <a class="navbar-toggler btn btn-primary btn-lg active m-2" data-toggle="collapse" href="#medias" role="button" aria-expanded="false" aria-controls="medias">Voir les médias</a>
+    
+</div>
 
-    {{ include('trick/_delete_form.html.twig') }}
+<div class="card text-center mx-2">
+    <div class="card-body">
+        <p class="card-text text-justify text-break">{{ trick.content ? trick.content : '' }}</p>
+    </div>
+    <div class="card-footer text-muted">
+        Catégories : {{ trick.category.name ? trick.category.name : '' }} - {{ trick.createdDate ? trick.createdDate|date('Y-m-d H:i:s') : '' }} - {{ trick.updatedDate ? trick.createdDate|date('Y-m-d H:i:s') : '' }}
+    </div>
+</div>
+
+<!-- DISSCUSSION -->
+
+<div class="container-fluid">
+    
+    <form class="row justify-content-md-center">
+    
+        <div class="col-12 col-lg-8 mt-3 pt-1 border-top"></div>
+        
+        <div class="col-12 col-lg-5 form-group m-0 mt-2">
+            <label for="disscussionMessage" class="sr-only">Message</label>
+            <input type="text" class="form-control" id="disscussionMessage"/>
+        </div>
+        
+        <div class="col-12 col-lg-3 mt-2">
+            <button type="submit" class="btn btn-primary">Laisser un message</button>
+        </div>
+        
+    </form>
+    
+    <div class="row justify-content-md-center text-left">
+        <div class="col col-lg-8 mt-3 pt-3 border-top">
+            
+            <div class="d-flex">
+                <img src="usericon/cat.svg" class="mr-3 imgDiscussion" alt="" />
+                <p class="border flex-grow-1 p-2">Will you do the same for me? It's time to face the music I'm no longer your muse. Heard it's beautiful, be the judge and my girls gonna take a vote. I can feel a phoenix inside of me. Heaven is jealous of our love, angels are crying from up above. Yeah, you take me to utopia.</p>
+            </div>
+            <div class="d-flex">
+                <img src="usericon/cat.svg" class="mr-3 imgDiscussion" alt="" />
+                <p class="border flex-grow-1 p-2">Will you do the same from up above. Yeah, you take me to utopia.</p>
+            </div>
+            
+        </div>
+    </div>
+    
+    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Charger plus</a>
+    
+</div>
+
+<!-- FIN DISSCUSSION -->
+
+</div>
 {% endblock %}
