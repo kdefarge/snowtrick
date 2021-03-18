@@ -28,6 +28,11 @@ class Media
      */
     private $link;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVideoLink;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +58,18 @@ class Media
     public function setLink(string $link): self
     {
         $this->link = $link;
+
+        return $this;
+    }
+
+    public function getIsVideoLink(): ?bool
+    {
+        return $this->isVideoLink;
+    }
+
+    public function setIsVideoLink(bool $isVideoLink): self
+    {
+        $this->isVideoLink = $isVideoLink;
 
         return $this;
     }
