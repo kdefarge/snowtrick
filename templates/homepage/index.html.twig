@@ -23,7 +23,14 @@
 <div id="tricks" class="container-fluid p-0 text-center pb-2">
     <div class="row row-cols-1 row-cols-lg-4 row-cols-xl-5 m-2">
         
+        {%  set trickCounter = 0 %}
         {% for trick in tricks %}
+        {% set trickCounter = trickCounter + 1%}
+        {% if trickCounter == 16 %}
+    </div>
+    <div class="collapse" id="collapseMoreTricks">
+    <div class="row row-cols-1 row-cols-lg-4 row-cols-xl-5 m-2">
+        {% endif %}
         <div class="col">
             <div class="border mb-4">
                 {% if trick.featuredMedia is defined %}
@@ -35,12 +42,14 @@
                     <a class="flex-grow-1 align-self-center ml-2 text-break" href="{{ path('trick_show', {'id': trick.id}) }}">
                         {{ trick.name }}
                     </a>
+                    {% if trick.user.id == app.user.id %}
                     <a href="{{ path('trick_edit', {'id': trick.id}) }}">
                         <img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" />
                     </a>
                     <a href="#">
                         <img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" />
                     </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -49,8 +58,12 @@
         {% endfor %}
         
     </div>
-    
-    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Charger plus</a>
+    {% if trickCounter > 15 %}
+    </div>
+    {% endif %}
+    {% if trickCounter > 15 %}
+    <a href="#collapseMoreTricks" class="btn btn-primary btn-lg active" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseMoreTricks">Charger plus</a>
+    {% endif %}
     
 </div>
 

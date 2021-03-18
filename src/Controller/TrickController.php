@@ -96,8 +96,7 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-
-            $trick->setUser($this->getUser());
+            
             $newcategory = $form->get('newcategory')->getData();
             if('' !== $newcategory && null !== $newcategory) {
                 $category = new Category();
