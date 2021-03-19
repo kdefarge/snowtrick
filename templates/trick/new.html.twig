@@ -1,11 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'simplebase.html.twig' %}
 
-{% block title %}New Trick{% endblock %}
+{% block title %}Nouveau du Trick{% endblock %}
 
-{% block body %}
-    <h1>Create new Trick</h1>
+{% block simplebase %}
+<div  id="content" class="border border-bottom-0 text-center pb-5">
 
-    {{ include('trick/_form.html.twig') }}
+    <div class="card text-center mx-2">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
 
-    <a href="{{ path('trick_index') }}">back to list</a>
+</div>
 {% endblock %}

@@ -20,6 +20,7 @@ user:
 form:
   send : Envoyer
   edit : Modifier
+  save : Sauvegarder
   confirm :
     delete : Êtes-vous sûr de bien vouloir supprimer cet élément?
   resetpassword : 
