@@ -42,7 +42,7 @@
                     <a class="flex-grow-1 align-self-center ml-2 text-break" href="{{ path('trick_show', {'id': trick.id}) }}">
                         {{ trick.name }}
                     </a>
-                    {% if trick.user.id == app.user.id %}
+                    {% if app.user and trick.user.id == app.user.id %}
                     <a href="{{ path('trick_edit', {'id': trick.id}) }}">
                         <img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" />
                     </a>

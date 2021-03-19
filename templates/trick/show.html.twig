@@ -27,50 +27,29 @@
     <div id="medias" class="collapse navbar-collapse">
         <div class="container-fluid p-0">
             <div class="row row-cols-1 row-cols-lg-4 row-cols-xl-6 justify-content-md-center m-2">
-                
+                {% for media in trick.media %}
                 <div class="col p-1 d-flex align-items-center justify-content-center container-fluid flex-column">
+                {% if media.isVideoLink %}
                     <div class="col p-0">
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/SQyTWk7OxSI" frameborder="0" allowfullscreen></iframe>
                         </div>
                     </div>
+                {% else %}
+                    <a href="#" class="col flex-grow-1 d-flex align-items-center justify-content-center px-0"><img src="{{ media.link }}" class="medias__img" alt=""></a>
+                {% endif %}
+                {% if app.user and trick.user.id == app.user.id %}
                     <div class="d-flex justify-content-end w-100">
                         <div class="border w-60">
                             <a href="#"><img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
                             <a href="#"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
                         </div>
                     </div>
+                {% endif %}
                 </div>
-                
-                <div class="col p-1 d-flex align-items-center justify-content-center container-fluid flex-column">
-                    <a href="#" class="col flex-grow-1 d-flex align-items-center justify-content-center px-0"><img src="images/bg-test3.png" class="medias__img" alt=""></a>
-                    <div class="d-flex justify-content-end w-100">
-                        <div class="border w-60">
-                            <a href="#"><img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
-                            <a href="#"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col p-1 d-flex align-items-center justify-content-center container-fluid flex-column">
-                    <a href="#" class="col flex-grow-1 d-flex align-items-center justify-content-center px-0"><img src="images/bg-test.png" class="medias__img" alt=""></a>
-                    <div class="d-flex justify-content-end w-100">
-                        <div class="border w-60">
-                            <a href="#"><img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
-                            <a href="#"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col p-1 d-flex align-items-center justify-content-center container-fluid flex-column">
-                    <a href="#" class="col flex-grow-1 d-flex align-items-center justify-content-center px-0"><img src="images/bg-test.png" class="medias__img" alt=""></a>
-                    <div class="d-flex justify-content-end w-100">
-                        <div class="border w-60">
-                            <a href="#"><img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
-                            <a href="#"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
-                        </div>
-                    </div>
-                </div>
+                {% else %}
+                    Pas de medias
+                {% endfor %}
                 
             </div>
         </div>
@@ -85,7 +64,7 @@
         <p class="card-text text-justify text-break">{{ trick.content ? trick.content : '' }}</p>
     </div>
     <div class="card-footer text-muted">
-        Catégories : {{ trick.category.name ? trick.category.name : '' }} - {{ trick.createdDate ? trick.createdDate|date('Y-m-d H:i:s') : '' }} - {{ trick.updatedDate ? trick.createdDate|date('Y-m-d H:i:s') : '' }}
+        Auteur : {{ trick.user.username ? trick.user.username : '' }} - Catégories : {{ trick.category.name ? trick.category.name : '' }} - {{ trick.createdDate ? trick.createdDate|date('Y-m-d H:i:s') : '' }} - {{ trick.updatedDate ? trick.createdDate|date('Y-m-d H:i:s') : '' }}
     </div>
 </div>
 
@@ -110,15 +89,14 @@
     
     <div class="row justify-content-md-center text-left">
         <div class="col col-lg-8 mt-3 pt-3 border-top">
-            
+            {% for discussion in trick.discussions %}
             <div class="d-flex">
-                <img src="usericon/cat.svg" class="mr-3 imgDiscussion" alt="" />
-                <p class="border flex-grow-1 p-2">Will you do the same for me? It's time to face the music I'm no longer your muse. Heard it's beautiful, be the judge and my girls gonna take a vote. I can feel a phoenix inside of me. Heaven is jealous of our love, angels are crying from up above. Yeah, you take me to utopia.</p>
+                <img src="{{ discussion.user.pictureLink }}" class="mr-3 imgDiscussion" alt="" />
+                <p class="border flex-grow-1 p-2"><span class="text-muted">{{ discussion.user.username }} - {{ discussion.createdDate|date('Y-m-d H:i:s') }}</span><br />{{ discussion.message }}</p>
             </div>
-            <div class="d-flex">
-                <img src="usericon/cat.svg" class="mr-3 imgDiscussion" alt="" />
-                <p class="border flex-grow-1 p-2">Will you do the same from up above. Yeah, you take me to utopia.</p>
-            </div>
+            {% else %}
+                Pas de discussion
+            {% endfor %}
             
         </div>
     </div>
