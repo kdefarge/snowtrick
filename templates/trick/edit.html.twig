@@ -63,6 +63,7 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
+    <a class="btn btn-danger" href="#" role="button" onclick="deleteMessage('{{ path('trick_delete', {'id': trick.id}) }}');return false;">Supprimer</a>
 </div>
 
 </div>
