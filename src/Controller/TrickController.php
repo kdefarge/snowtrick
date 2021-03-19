@@ -140,6 +140,6 @@ class TrickController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('trick_index');
+        return $this->redirectToRoute('homepage', ['_fragment' => 'tricks']);
     }
 }

@@ -46,7 +46,7 @@
                     <a href="{{ path('trick_edit', {'id': trick.id}) }}">
                         <img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" />
                     </a>
-                    <a href="#">
+                    <a href="#" onclick="deleteMessage('{{ path('trick_delete', {'id': trick.id}) }}');return false;">
                         <img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" />
                     </a>
                     {% endif %}
