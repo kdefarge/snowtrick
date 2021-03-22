@@ -8,11 +8,14 @@ function deleteMessage(actionLink) {
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of tags
     var $tagsCollectionHolder = $('ul.medias');
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    $tagsCollectionHolder.data('index', $tagsCollectionHolder.find(':input').length);
 
-    addFormToCollection('medias');
+    if($tagsCollectionHolder.length) {
+        // count the current form inputs we have (e.g. 2), use that as the new
+        // index when inserting a new item (e.g. 2)
+        $tagsCollectionHolder.data('index', $tagsCollectionHolder.find(':input').length);
+
+        addFormToCollection('medias');
+    }
 
     $('body').on('click', '.add_item_link', function(e) {
         var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
