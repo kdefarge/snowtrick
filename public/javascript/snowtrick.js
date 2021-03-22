@@ -12,6 +12,8 @@ jQuery(document).ready(function() {
     // index when inserting a new item (e.g. 2)
     $tagsCollectionHolder.data('index', $tagsCollectionHolder.find(':input').length);
 
+    addFormToCollection('medias');
+
     $('body').on('click', '.add_item_link', function(e) {
         var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
         // add a new tag form (see next code block)

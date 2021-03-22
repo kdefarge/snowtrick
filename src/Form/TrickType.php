@@ -33,9 +33,10 @@ class TrickType extends AbstractType
                 'entry_options' => ['label' => false],
                 'mapped' => false,
                 'required' => false,
-                'allow_add' => true
+                'allow_add' => true,
+                'label' => 'form.trick.uploadimage',
             ])
-            ->add('edit', SubmitType::class, [
+            ->add('save', SubmitType::class, [
                 'label' => 'form.save'
             ])
         ;
