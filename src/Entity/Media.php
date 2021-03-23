@@ -33,6 +33,11 @@ class Media
      */
     private $isVideoLink;
 
+    public function __construct()
+    {
+        $this->isVideoLink = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
