@@ -7,7 +7,7 @@
     {{ form_label(form.medias) }}
     {{ form_errors(form.medias) }}
     <ul class="medias" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}"></ul>
-    <button type="button" class="add_item_link btn btn-danger" data-collection-holder-class="medias">{{ 'form.trick.addimage'|trans }}</button>
+    <button type="button" class="add_item_link btn btn-info" data-collection-holder-class="medias">{{ 'form.trick.addimage'|trans }}</button>
     {{ form_widget(form.medias) }}
     <br />
     {{ form_row(form.save) }}

@@ -14,6 +14,11 @@ jQuery(document).ready(function() {
         // index when inserting a new item (e.g. 2)
         $tagsCollectionHolder.data('index', $tagsCollectionHolder.find(':input').length);
 
+        // add a delete link to all of the existing tag form li elements
+        $tagsCollectionHolder.find('li').each(function() {
+            addTagFormDeleteLink($(this));
+        });
+
         addFormToCollection('medias');
     }
 
@@ -51,4 +56,17 @@ function addFormToCollection($collectionHolderClass) {
     var $newFormLi = $('<li></li>').append(newForm);
     // Add the new form at the end of the list
     $collectionHolder.append($newFormLi)
+
+    // add a delete link to the new form
+    addTagFormDeleteLink($newFormLi);
+}
+
+function addTagFormDeleteLink($tagFormLi) {
+    var $removeFormButton = $('<button class="btn btn-warning" type="button">Supprimer le champ ci-dessus</button>');
+    $tagFormLi.append($removeFormButton);
+
+    $removeFormButton.on('click', function(e) {
+        // remove the li for the tag form
+        $tagFormLi.remove();
+    });
 }

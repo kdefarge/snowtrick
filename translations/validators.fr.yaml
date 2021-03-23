@@ -12,3 +12,7 @@ user:
   email:
     notblank: Veuillez entrer une adresse e-mail.
     notvalid: Cette valeur n\'est pas une adresse e-mail valide.
+trick:
+  image:
+    notvalid: Veuillez télécharger une image valide.
+    maxsize: Cette image est trop volumineuse, le maximun est 2mo.

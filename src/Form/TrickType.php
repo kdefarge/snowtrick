@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class TrickType extends AbstractType
 {
@@ -30,11 +31,14 @@ class TrickType extends AbstractType
             ])
             ->add('medias', CollectionType::class, [
                 'entry_type' => FileType::class,
-                'entry_options' => ['label' => false],
+                'entry_options' => [
+                    'label' => false,
+                    'required' => false,
+                ],
                 'mapped' => false,
                 'required' => false,
                 'allow_add' => true,
-                'label' => 'form.trick.uploadimage',
+                'allow_delete' => true,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'form.save'
