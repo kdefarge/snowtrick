@@ -23,6 +23,22 @@ DATABASE_URL="mysql://USER:PASSWRD@SERVER:PORT/DB_NAME?serverVersion=mariadb-X.X
 MAILER_DSN=smtp://USER:PASSWORD@SERVER_SMTP:PORT
 ```
 
+- install database
+
+```bash
+# Doctrine can create the DB_NAME database for you
+php bin/console doctrine:database:create
+# executes all migration files
+php bin/console doctrine:migrations:migrate
+```
+
+- Run dev fixture
+
+```bash
+# load all the 'dev' fixtures
+php bin/console hautelook:fixtures:load --env=dev
+```
+
 ## Running Snowtrick Application
 
 ```bash
