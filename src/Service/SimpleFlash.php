@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class SimpleFlash
 {
-    private $session;
     private $flashBag;
     
     public function __construct(FlashBagInterface $flashBag)
@@ -14,48 +13,48 @@ class SimpleFlash
         $this->flashBag = $flashBag;
     }
 
-    public function type_none(string $type, string $message)
+    public function typeNone(string $type, string $message)
     {
         $this->flashBag->add($type, $message);
     }
 
-    public function type_primary(string $message)
+    public function typePrimary(string $message)
     {
-        $this->type_none('primary', $message);
+        $this->typeNone('primary', $message);
     }
 
-    public function type_secondary(string $message)
+    public function typeSecondary(string $message)
     {
-        $this->type_none('secondary', $message);
+        $this->typeNone('secondary', $message);
     }
 
-    public function type_success(string $message)
+    public function typeSuccess(string $message)
     {
-        $this->type_none('success', $message);
+        $this->typeNone('success', $message);
     }
 
-    public function type_danger(string $message)
+    public function typeDanger(string $message)
     {
-        $this->type_none('danger', $message);
+        $this->typeNone('danger', $message);
     }
 
-    public function type_warning(string $message)
+    public function typeWarning(string $message)
     {
-        $this->type_none('warning', $message);
+        $this->typeNone('warning', $message);
     }
 
-    public function type_info(string $message)
+    public function typeInfo(string $message)
     {
-        $this->type_none('info', $message);
+        $this->typeNone('info', $message);
     }
 
-    public function type_light(string $message)
+    public function typeLight(string $message)
     {
-        $this->type_none('light', $message);
+        $this->typeNone('light', $message);
     }
 
-    public function type_dark(string $message)
+    public function typeDark(string $message)
     {
-        $this->type_none('dark', $message);
+        $this->typeNone('dark', $message);
     }
 }
