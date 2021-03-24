@@ -44,7 +44,7 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trickHelper->FormToDatabase($trick, $form);
+            $trickHelper->formToDatabase($trick, $form);
             return $this->redirectToRoute('trick_show', ['id' => $trick->getId()]);
         }
 
@@ -85,7 +85,7 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trickHelper->FormToDatabase($trick, $form);
+            $trickHelper->formToDatabase($trick, $form);
             return $this->redirectToRoute('trick_show', ['id' => $trick->getId()]);
         }
 

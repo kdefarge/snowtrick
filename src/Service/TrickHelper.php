@@ -18,7 +18,7 @@ class TrickHelper
         $this->mediaHelper = $mediaHelper;
     }
 
-    public function FormToDatabase(Trick $trick, Form $form) : void //on peut pas utiliser un forminterface???
+    public function formToDatabase(Trick $trick, Form $form) : void //on peut pas utiliser un forminterface???
     {
         $newcategory = $form->get('newcategory')->getData();
         if('' !== $newcategory && null !== $newcategory) {
@@ -45,8 +45,8 @@ class TrickHelper
         $mediaCollection = $trick->getMedia();
         foreach($mediaCollection as $media) {
             $this->entityManager->remove($media);
-            $this->entityManager->flush();
         }
+        $this->entityManager->flush();
         $this->entityManager->remove($trick);
         $this->entityManager->flush();
     }
