@@ -60,9 +60,7 @@
 </div>
 
 <div class="card text-center mx-2">
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    {{ include('trick/_form.html.twig') }}
     <a class="btn btn-danger" href="#" role="button" onclick="deleteMessage('{{ path('trick_delete', {'id': trick.id}) }}');return false;">Supprimer</a>
 </div>
 

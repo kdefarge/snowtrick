@@ -189,22 +189,22 @@ class Trick
         return $this->media;
     }
 
-    public function addMedium(Media $medium): self
+    public function addMedia(Media $media): self
     {
-        if (!$this->media->contains($medium)) {
-            $this->media[] = $medium;
-            $medium->setTrick($this);
+        if (!$this->media->contains($media)) {
+            $this->media[] = $media;
+            $media->setTrick($this);
         }
 
         return $this;
     }
 
-    public function removeMedium(Media $medium): self
+    public function removeMedia(Media $media): self
     {
-        if ($this->media->removeElement($medium)) {
+        if ($this->media->removeElement($media)) {
             // set the owning side to null (unless already changed)
-            if ($medium->getTrick() === $this) {
-                $medium->setTrick(null);
+            if ($media->getTrick() === $this) {
+                $media->setTrick(null);
             }
         }
 

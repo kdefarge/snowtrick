@@ -46,18 +46,6 @@ class MediaHelper
         return true;
     }
 
-    public function trickUploadedCollectionAnalyzer(Trick $trick, array $uploadedFileCollection)
-    {
-        foreach($uploadedFileCollection as $uploadedFile) {
-            if($uploadedFile && $this->isUploadedImageValid($uploadedFile)) {
-                $media = $this->uploadedImageToMediaEntity($uploadedFile);
-                $media->setTrick($trick);
-                $this->entityManager->persist($media);
-            }
-        }
-        //$this->session->getFlashBag()->add('success', 'Enregistrement réussi, veuillez confirmer votre email');
-    }
-
     public function uploadedImageToMediaEntity(UploadedFile $uploadedFile) : Media
     {
         $media = new Media();
