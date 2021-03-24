@@ -4,18 +4,19 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Entity\Trick;
+use App\Entity\Media;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
 
 class TrickHelper
 {
     private $entityManager;
-    private $mediaHelper;
+    private $uploadedManager;
     
-    public function __construct(EntityManagerInterface $entityManager, MediaHelper $mediaHelper)
+    public function __construct(EntityManagerInterface $entityManager, UploadedManager $uploadedManager)
     {
         $this->entityManager = $entityManager;
-        $this->mediaHelper = $mediaHelper;
+        $this->uploadedManager = $uploadedManager;
     }
 
     public function formToDatabase(Trick $trick, Form $form) : void //on peut pas utiliser un forminterface???
@@ -27,16 +28,19 @@ class TrickHelper
             $trick->setCategory($category);
             $this->entityManager->persist($category);
         }
+        
+        $this->entityManager->persist($trick);
 
         $uploadedFileCollection = $form->get('medias')->getData();
         foreach($uploadedFileCollection as $uploadedFile) {
-            if($uploadedFile && $this->mediaHelper->isUploadedImageValid($uploadedFile)) {
-                $media = $this->mediaHelper->uploadedImageToMediaEntity($uploadedFile);
-                $media->setTrick($trick);
-                $this->entityManager->persist($media);
+            if($uploadedFile) {
+                $media = $this->uploadedManager->ImageValidToMediaEntity($uploadedFile, 'trick');
+                if($media) {
+                    $media->setTrick($trick);
+                    $this->entityManager->persist($media);
+                }
             }
         }
-        $this->entityManager->persist($trick);
         $this->entityManager->flush();
     }
 
@@ -44,6 +48,7 @@ class TrickHelper
     {
         $mediaCollection = $trick->getMedia();
         foreach($mediaCollection as $media) {
+            $this->uploadedManager->deleteUploadedFile($media);
             $this->entityManager->remove($media);
         }
         $this->entityManager->flush();
