@@ -37,7 +37,7 @@ class UploadedManager
         return $this->params->get('upload_directory').$directory;
     }
 
-    public function ImageValidToMediaEntity(UploadedFile $uploadedFile, string $directory) : ?Media
+    public function imageValidToMediaEntity(UploadedFile $uploadedFile, string $directory) : ?Media
     {
         $errors = $this->validator->validate($uploadedFile, $this->constraintImage);
         if(count($errors) > 0)

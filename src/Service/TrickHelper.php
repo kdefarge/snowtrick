@@ -34,7 +34,7 @@ class TrickHelper
         $uploadedFileCollection = $form->get('medias')->getData();
         foreach($uploadedFileCollection as $uploadedFile) {
             if($uploadedFile) {
-                $media = $this->uploadedManager->ImageValidToMediaEntity($uploadedFile, 'trick');
+                $media = $this->uploadedManager->imageValidToMediaEntity($uploadedFile, 'trick');
                 if($media) {
                     $media->setTrick($trick);
                     $this->entityManager->persist($media);
