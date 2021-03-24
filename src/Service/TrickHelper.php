@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Entity\Trick;
-use App\Entity\Media;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
 
@@ -46,13 +45,17 @@ class TrickHelper
 
     public function delete(Trick $trick)
     {
-        $mediaCollection = $trick->getMedia();
-        foreach($mediaCollection as $media) {
+        $this->deleteMedia($trick->getMedia());
+        $this->entityManager->remove($trick);
+        $this->entityManager->flush();
+    }
+
+    public function deleteMedia($medias)
+    {
+        foreach($medias as $media) {
             $this->uploadedManager->deleteUploadedFile($media);
             $this->entityManager->remove($media);
         }
-        $this->entityManager->flush();
-        $this->entityManager->remove($trick);
         $this->entityManager->flush();
     }
 }

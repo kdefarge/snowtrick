@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
+use App\Entity\Media;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
@@ -117,5 +117,29 @@ class TrickController extends AbstractController
         }
 
         return $this->redirectToRoute('homepage', ['_fragment' => 'tricks']);
+    }
+
+    /**
+     * @Route("/media/{id}", name="media_delete", methods={"DELETE"})
+     */
+    public function deleteMedia(Request $request, Media $media, TrickHelper $trickHelper): Response
+    {
+        if(!$this->isGranted('ROLE_USER')) {
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
+        $user = $this->getUser();
+        $trick = $media->getTrick();
+        if($user->getId()!=$trick->getUser()->getId()) {
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
+        if ($this->isCsrfTokenValid('delete', $request->request->get('_token'))) {
+            $trickHelper->deleteMedia([$media]);
+        }
+
+        return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()]);
     }
 }
