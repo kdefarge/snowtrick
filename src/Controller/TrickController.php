@@ -154,4 +154,58 @@ class TrickController extends AbstractController
 
         return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()]);
     }
+
+    /**
+     * @Route("/media/{id}/featured", name="trick_update_featuredmedia", methods={"GET"})
+     */
+    public function updateFeaturedMedia(Media $media): Response
+    {
+        if(!$this->isGranted('ROLE_USER')) {
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
+        $user = $this->getUser();
+        $trick = $media->getTrick();
+
+        if($media->getIsVideoLink())
+            return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()]);
+
+        if($user->getId()!=$trick->getUser()->getId()) {
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
+        $trick->setFeaturedMedia($media);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($trick);
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()]);
+    }
+
+    /**
+     * @Route("{id}/featured/remove/", name="trick_remove_featuredmedia", methods={"GET"})
+     */
+    public function removeFeaturedMedia(Trick $trick): Response
+    {
+        if(!$this->isGranted('ROLE_USER')) {
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
+        $user = $this->getUser();
+
+        if($user->getId()!=$trick->getUser()->getId()) {
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
+        $trick->setFeaturedMedia(null);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($trick);
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()]);
+    }
 }

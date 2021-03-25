@@ -9,9 +9,8 @@
 <div class="trick__header d-flex flex-column justify-content-between bg-secondary py-2" style="background-image: url({{ trick.featuredMedia ? upload_asset ~ trick.featuredMedia.link : asset('images/no-image.png') }});">
         
     <div class="align-self-end bg-light mr-2">
-    
-        <a href="{{ path('trick_edit', {'id': trick.id}) }}"><img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
-        
+            
+        <a href="{{ path('trick_remove_featuredmedia', {'id': trick.id}) }}"><img src="{{ asset('images/theme/b-remove-featuredmedia.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
         <a href="{{ path('trick_delete', {'id': trick.id}) }}"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
         
     </div>

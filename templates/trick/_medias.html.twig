@@ -18,7 +18,7 @@
                 {% if app.user and trick.user.id == app.user.id %}
                     <div class="d-flex justify-content-end w-100">
                         <div class="border w-60">
-                            {# <a href="#"><img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a> #}
+                            <a href="{{ path('trick_update_featuredmedia', {'id': media.id}) }}"><img src="{{ asset('images/theme/b-edit-media.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
                             <a href="#" onclick="deleteMessage('{{ path('media_delete', {'id': media.id}) }}');return false;"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
                         </div>
                     </div>
@@ -27,7 +27,6 @@
                 {% else %}
                     Pas de medias
                 {% endfor %}
-                
             </div>
         </div>
     </div>
