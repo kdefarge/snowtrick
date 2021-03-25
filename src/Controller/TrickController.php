@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Media;
 use App\Entity\Trick;
 use App\Form\TrickType;
+use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use App\Service\TrickHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +31,7 @@ class TrickController extends AbstractController
     /**
      * @Route("/new", name="trick_new", methods={"GET","POST"})
      */
-    public function new(Request $request, TrickHelper $trickHelper): Response
+    public function new(Request $request, TrickHelper $trickHelper, MediaRepository $mediaRepository): Response
     {
         if(!$this->isGranted('ROLE_USER')) {
             $this->addFlash('warning', 'user.needed');
@@ -45,6 +46,17 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $trickHelper->formToDatabase($trick, $form);
+            
+            /** @var Media $media */
+            $media = $mediaRepository->findOneBy(['trick' => $trick, 'isVideoLink' => false]);
+
+            if($media) {
+                $trick->setFeaturedMedia($media);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($trick);
+                $entityManager->flush();
+            }
+
             return $this->redirectToRoute('trick_show', ['id' => $trick->getId()]);
         }
 
@@ -137,7 +149,7 @@ class TrickController extends AbstractController
         }
 
         if ($this->isCsrfTokenValid('delete', $request->request->get('_token'))) {
-            $trickHelper->deleteMedia([$media]);
+            $trickHelper->deleteOneMedia($media);
         }
 
         return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()]);

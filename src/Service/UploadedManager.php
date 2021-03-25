@@ -58,10 +58,10 @@ class UploadedManager
         return $media;
     }
 
-    public function deleteUploadedFile(Media $media) : void
+    public function deleteUploadedFile(string $link) : void
     {
         $filesystem = new Filesystem();
-        $filetodelete = $this->params->get('upload_directory').$media->getLink();
+        $filetodelete = $this->params->get('upload_directory').$link;
         if($filesystem->exists($filetodelete))
             $filesystem->remove($filetodelete);
     }

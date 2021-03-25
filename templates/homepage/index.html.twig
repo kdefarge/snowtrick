@@ -33,11 +33,7 @@
         {% endif %}
         <div class="col">
             <div class="border mb-4">
-                {% if trick.featuredMedia is defined %}
-                <img src="{{ trick.featuredMedia.link }}" class="medias__img" alt="">
-                {% else %}
-                <img src="{{ asset('images/no-image.png') }}" class="medias__img" alt="">
-                {% endif %}
+                <img src="{{ trick.featured_media ? upload_asset ~ trick.featured_media.link : asset('images/no-image.png') }}" class="medias__img" alt="">
                 <div class="d-flex justify-content-end">
                     <a class="flex-grow-1 align-self-center ml-2 text-break" href="{{ path('trick_show', {'id': trick.id}) }}">
                         {{ trick.name }}
