@@ -1,0 +1,75 @@
+{% extends 'simplebase.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block simplebase %}
+
+<div  id="content" class="border border-bottom-0 text-center pb-5">
+				
+<div class="trick__header d-flex flex-column justify-content-between bg-secondary py-2" style="background-image: url({{ trick.featuredMedia ? upload_asset ~ trick.featuredMedia.link : asset('images/no-image.png') }});">
+        
+    <div class="align-self-end bg-light mr-2">
+    
+        <a href="{{ path('trick_edit', {'id': trick.id}) }}"><img src="{{ asset('images/theme/b-edit.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+        
+        <a href="#" onclick="deleteMessage('{{ path('trick_delete', {'id': trick.id}) }}');return false;"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+        
+    </div>
+    
+    <h1 class="bg-light bg-opacity text-break">{{ trick.name }}</h1>
+    
+    <div class="my-2 imgMenu"></div>
+</div>
+
+ {{ include('trick/_medias.html.twig') }}
+
+<div class="card text-center mx-2">
+    <div class="card-body">
+        <p class="card-text text-justify text-break">{{ trick.content ? trick.content : '' }}</p>
+    </div>
+    <div class="card-footer text-muted">
+        Auteur : {{ trick.user.username ? trick.user.username : '' }} - Catégories : {{ trick.category.name ? trick.category.name : '' }} - {{ trick.createdDate ? trick.createdDate|date('Y-m-d H:i:s') : '' }} - {{ trick.updatedDate ? trick.createdDate|date('Y-m-d H:i:s') : '' }}
+    </div>
+</div>
+
+<!-- DISSCUSSION -->
+
+<div class="container-fluid">
+    
+    <form class="row justify-content-md-center">
+    
+        <div class="col-12 col-lg-8 mt-3 pt-1 border-top"></div>
+        
+        <div class="col-12 col-lg-5 form-group m-0 mt-2">
+            <label for="disscussionMessage" class="sr-only">Message</label>
+            <input type="text" class="form-control" id="disscussionMessage"/>
+        </div>
+        
+        <div class="col-12 col-lg-3 mt-2">
+            <button type="submit" class="btn btn-primary">Laisser un message</button>
+        </div>
+        
+    </form>
+    
+    <div class="row justify-content-md-center text-left">
+        <div class="col col-lg-8 mt-3 pt-3 border-top">
+            {% for discussion in trick.discussions %}
+            <div class="d-flex">
+                <img src="{{ discussion.user.pictureLink }}" class="mr-3 imgDiscussion" alt="" />
+                <p class="border flex-grow-1 p-2"><span class="text-muted">{{ discussion.user.username }} - {{ discussion.createdDate|date('Y-m-d H:i:s') }}</span><br />{{ discussion.message }}</p>
+            </div>
+            {% else %}
+                Pas de discussion
+            {% endfor %}
+            
+        </div>
+    </div>
+    
+    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Charger plus</a>
+    
+</div>
+
+<!-- FIN DISSCUSSION -->
+
+</div>
+{% endblock %}

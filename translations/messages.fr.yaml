@@ -20,6 +20,7 @@ user:
 form:
   send : Envoyer
   edit : Modifier
+  save : Sauvegarder
   confirm :
     delete : Êtes-vous sûr de bien vouloir supprimer cet élément?
   resetpassword : 
@@ -32,3 +33,6 @@ form:
       title : réinitialisez votre mot de passe
       button : Réinitialiser le mot de passe
       linknovalid : Un problème est survenu lors de la validation de votre demande de réinitialisation
+  trick :
+    uploadimage : Rajouter une image
+    addimage : Ajouter un image supplémentaire

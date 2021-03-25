@@ -1,0 +1,36 @@
+        
+<div class="navbar-expand-lg">
+
+    <div id="medias" class="collapse navbar-collapse">
+        <div class="container-fluid p-0">
+            <div class="row row-cols-1 row-cols-lg-4 row-cols-xl-6 justify-content-md-center m-2">
+                {% for media in trick.media %}
+                <div class="col p-1 d-flex align-items-center justify-content-center container-fluid flex-column">
+                {% if media.isVideoLink %}
+                    <div class="col p-0">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/SQyTWk7OxSI" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="#" class="col flex-grow-1 d-flex align-items-center justify-content-center px-0"><img src="{{ upload_asset ~ media.link }}" class="medias__img" alt=""></a>
+                {% endif %}
+                {% if app.user and trick.user.id == app.user.id %}
+                    <div class="d-flex justify-content-end w-100">
+                        <div class="border w-60">
+                            <a href="{{ path('trick_update_featuredmedia', {'id': media.id}) }}"><img src="{{ asset('images/theme/b-edit-media.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+                            <a href="#" onclick="deleteMessage('{{ path('media_delete', {'id': media.id}) }}');return false;"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+                {% else %}
+                    Pas de medias
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <a class="navbar-toggler btn btn-primary btn-lg active m-2" data-toggle="collapse" href="#medias" role="button" aria-expanded="false" aria-controls="medias">Voir les médias</a>
+    
+</div>

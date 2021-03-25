@@ -1,0 +1,14 @@
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.content) }}
+    {{ form_row(form.newcategory) }}
+    {{ form_row(form.category) }}
+    
+    {{ form_label(form.medias) }}
+    {{ form_errors(form.medias) }}
+    <ul class="medias" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}"></ul>
+    <button type="button" class="add_item_link btn btn-info" data-collection-holder-class="medias">{{ 'form.trick.addimage'|trans }}</button>
+    {{ form_widget(form.medias) }}
+    <br />
+    {{ form_row(form.save) }}
+{{ form_end(form) }}

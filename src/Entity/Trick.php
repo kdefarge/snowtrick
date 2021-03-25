@@ -61,10 +61,17 @@ class Trick
      */
     private $media;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Media::class, orphanRemoval=false)
+     */
+    private $featured_media;
+
     public function __construct()
     {
         $this->discussions = new ArrayCollection();
         $this->media = new ArrayCollection();
+        $this->created_date = new \DateTime();
+        $this->updated_date = new \DateTime();
     }
 
     public function getId(): ?int
@@ -182,24 +189,36 @@ class Trick
         return $this->media;
     }
 
-    public function addMedium(Media $medium): self
+    public function addMedia(Media $media): self
     {
-        if (!$this->media->contains($medium)) {
-            $this->media[] = $medium;
-            $medium->setTrick($this);
+        if (!$this->media->contains($media)) {
+            $this->media[] = $media;
+            $media->setTrick($this);
         }
 
         return $this;
     }
 
-    public function removeMedium(Media $medium): self
+    public function removeMedia(Media $media): self
     {
-        if ($this->media->removeElement($medium)) {
+        if ($this->media->removeElement($media)) {
             // set the owning side to null (unless already changed)
-            if ($medium->getTrick() === $this) {
-                $medium->setTrick(null);
+            if ($media->getTrick() === $this) {
+                $media->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFeaturedMedia(): ?Media
+    {
+        return $this->featured_media;
+    }
+
+    public function setFeaturedMedia(?Media $featured_media): self
+    {
+        $this->featured_media = $featured_media;
 
         return $this;
     }

@@ -19,6 +19,21 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
+    public function findAllJoinedToUserAndMedia() : array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT t, u, m
+            FROM App\Entity\Trick t
+            INNER JOIN t.user u
+            LEFT JOIN t.featured_media m
+            ORDER BY t.id DESC'
+        );
+
+        return $query->getArrayResult();
+    }
+
     // /**
     //  * @return Trick[] Returns an array of Trick objects
     //  */

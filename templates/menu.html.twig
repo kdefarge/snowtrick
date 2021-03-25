@@ -20,6 +20,9 @@
             {% if app.user %}
 
             <li class="nav-item">
+                <a class="nav-link" href="{{ path('trick_new') }}"><img src="{{ asset('images/theme/b-edit.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Nouveau Trick</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ path('user_account') }}"><img src="{{ asset('images/theme/m-account.svg') }}" class="imgMenu d-inline-block mr-1" alt="" />Mon compte</a>
             </li>
             <li class="nav-item">
