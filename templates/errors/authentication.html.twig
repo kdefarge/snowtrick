@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Snowtrick - You shall not pass!{% endblock %}
+
+{% block body %}
+<div class="container-fluid bg-light px-0" id="header">
+
+    {{ include('menu.html.twig') }}
+
+    <div class="container-md px-0 py-5">
+
+        <img src="{{ asset('images/you-shall-not-pass.jpg') }}" lt="" />
+        
+    </div>
+    
+</div>
+
+{% endblock %}
