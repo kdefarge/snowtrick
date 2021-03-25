@@ -47,3 +47,4 @@ symfony server:start
 ```
 
 Open your browser and navigate to http://localhost:8000/. If everything is working, you’ll see a welcome page. Later, when you are finished working, stop the server by pressing Ctrl+C from your terminal.
+
