@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Discussion;
 use App\Entity\Media;
 use App\Entity\Trick;
+use App\Form\DiscussionFormType;
 use App\Form\TrickType;
 use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
@@ -18,16 +20,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TrickController extends AbstractController
 {
-    /**
-     * @Route("/", name="trick_index", methods={"GET"})
-     */
-    public function index(TrickRepository $trickRepository): Response
-    {
-        return $this->render('trick/index.html.twig', [
-            'tricks' => $trickRepository->findBy([],['id' => 'DESC']),
-        ]);
-    }
-
     /**
      * @Route("/new", name="trick_new", methods={"GET","POST"})
      */
@@ -67,12 +59,33 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="trick_show", methods={"GET"})
+     * @Route("/{id}", name="trick_show", methods={"GET","POST"})
      */
-    public function show(Trick $trick): Response
+    public function show(Request $request, Trick $trick): Response
     {
+
+        if(!$this->isGranted('ROLE_USER')) {
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
+        $discussion = new Discussion();
+        $form = $this->createForm(DiscussionFormType::class, $discussion);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $discussion->setUser($this->getUser());
+            $discussion->setTrick($trick);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($discussion);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('trick_show', ['id' => $trick->getId(), '_fragment' => 'discussion-area']);
+        }
+
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -207,5 +220,34 @@ class TrickController extends AbstractController
         $entityManager->flush();
         
         return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()]);
+    }
+    
+
+    /**
+     * @Route("/disscusion/{id}", name="discussion_delete", methods={"DELETE"})
+     */
+    public function deleteDiscussion(Request $request, Discussion $discussion): Response
+    {
+        if(!$this->isGranted('ROLE_USER')) {
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
+        $user = $this->getUser();
+
+        if($user->getId()!=$discussion->getUser()->getId()) {
+            $this->addFlash('warning', 'user.needed');
+            return $this->redirectToRoute('homepage');
+        }
+
+        $trick = $discussion->getTrick();
+
+        if ($this->isCsrfTokenValid('delete', $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($discussion);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('trick_show', ['id' => $trick->getId(), '_fragment' => 'discussion-area']);
     }
 }

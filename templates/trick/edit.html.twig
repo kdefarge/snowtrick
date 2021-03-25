@@ -10,7 +10,10 @@
         
     <div class="align-self-end bg-light mr-2">
             
+        <a href="{{ path('trick_show', {'id': trick.id}) }}"><img src="{{ asset('images/theme/b-return.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+        
         <a href="{{ path('trick_remove_featuredmedia', {'id': trick.id}) }}"><img src="{{ asset('images/theme/b-remove-featuredmedia.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+        
         <a href="#" onclick="deleteMessage('{{ path('trick_delete', {'id': trick.id}) }}');return false;"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
         
     </div>

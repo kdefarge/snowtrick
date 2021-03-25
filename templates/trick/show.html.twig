@@ -21,7 +21,7 @@
     <div class="my-2 imgMenu"></div>
 </div>
 
- {{ include('trick/_medias.html.twig') }}
+{{ include('trick/_medias.html.twig') }}
 
 <div class="card text-center mx-2">
     <div class="card-body">
@@ -32,44 +32,7 @@
     </div>
 </div>
 
-<!-- DISSCUSSION -->
-
-<div class="container-fluid">
-    
-    <form class="row justify-content-md-center">
-    
-        <div class="col-12 col-lg-8 mt-3 pt-1 border-top"></div>
-        
-        <div class="col-12 col-lg-5 form-group m-0 mt-2">
-            <label for="disscussionMessage" class="sr-only">Message</label>
-            <input type="text" class="form-control" id="disscussionMessage"/>
-        </div>
-        
-        <div class="col-12 col-lg-3 mt-2">
-            <button type="submit" class="btn btn-primary">Laisser un message</button>
-        </div>
-        
-    </form>
-    
-    <div class="row justify-content-md-center text-left">
-        <div class="col col-lg-8 mt-3 pt-3 border-top">
-            {% for discussion in trick.discussions %}
-            <div class="d-flex">
-                <img src="{{ discussion.user.pictureLink }}" class="mr-3 imgDiscussion" alt="" />
-                <p class="border flex-grow-1 p-2"><span class="text-muted">{{ discussion.user.username }} - {{ discussion.createdDate|date('Y-m-d H:i:s') }}</span><br />{{ discussion.message }}</p>
-            </div>
-            {% else %}
-                Pas de discussion
-            {% endfor %}
-            
-        </div>
-    </div>
-    
-    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Charger plus</a>
-    
-</div>
-
-<!-- FIN DISSCUSSION -->
+ {{ include('trick/_discussion.html.twig') }}
 
 </div>
 {% endblock %}
