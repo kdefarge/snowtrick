@@ -1,0 +1,39 @@
+<div class="container-fluid" id="discussion-area">
+
+    {{ form_start(form) }}
+    <div class="row justify-content-md-center">
+        <div class="col-12 col-lg-8 mt-3 pt-1 border-top"></div>
+
+        <div class="col-12 col-lg-5 form-group m-0 mt-2">
+            {{ form_label(form.message, null, {'label_attr': {'class': 'sr-only'}}) }}
+            {{ form_errors(form.message) }}
+            {{ form_widget(form.message) }}
+        </div>
+        <div class="col-12 col-lg-3 mt-2">
+            {{ form_widget(form.save) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+    
+    <div class="row justify-content-md-center text-left">
+        <div class="col col-lg-8 mt-3 pt-3 border-top">
+            {% for discussion in trick.discussions %}
+            <div class="d-flex">
+                <img src="{{ discussion.user.pictureLink }}" class="mr-3 imgDiscussion" alt="" />
+                <p class="border flex-grow-1 p-2">
+                    <span class="text-muted">
+                        {{ discussion.user.username }} - {{ discussion.createdDate|date('Y-m-d H:i:s') }}
+                        <a href="#" onclick="deleteMessage('{{ path('discussion_delete', {'id': discussion.id}) }}');return false;"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+                    </span>
+                    <br />{{ discussion.message }}
+                </p>
+            </div>
+            {% else %}
+                Pas de discussion
+            {% endfor %}
+        </div>
+    </div>
+    
+    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Charger plus</a>
+    
+</div>
