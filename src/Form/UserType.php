@@ -34,17 +34,6 @@ class UserType extends AbstractType
                     ])
                 ]
             ])
-            ->add('email', EmailType::class , [
-                'label' => 'user.email.label',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'user.email.notblank'
-                    ]),
-                    new Email([
-                        'message' => 'user.email.notvalid'
-                    ])
-                ]
-            ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'label' => 'user.newpassword.label',
