@@ -13,11 +13,17 @@
 
         <a href="{{ path('user_account') }}">{{ 'user.account.title'|trans }}</a>
 
-        {{ include('user/_form.html.twig') }}
+        {% include 'user/_form.html.twig' %}
 
     </div>
 
-    <div>{{ include('user/_delete_form.html.twig') }}</div>
+    <div class="col-12">
+
+        {% include 'reset_password/_form.html.twig' %}
+
+    </div>
+    
+    <div>{% include 'user/_delete_form.html.twig' %}</div>
 
 </div>
 

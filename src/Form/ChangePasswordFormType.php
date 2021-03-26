@@ -17,6 +17,7 @@ class ChangePasswordFormType extends AbstractType
         $builder
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
+                'label' => 'user.newpassword.label',
                 'first_options' => [
                     'constraints' => [
                         new NotBlank([

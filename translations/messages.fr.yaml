@@ -17,6 +17,10 @@ user:
     title: Modification de mon compte
   email:
     label: "Adresse email :"
+  firstname:
+    label: "Prénom :"   
+  lastname:
+    label: "Nom de famille :"   
 form:
   send : Envoyer
   edit : Modifier

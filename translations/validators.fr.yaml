@@ -12,6 +12,10 @@ user:
   email:
     notblank: Veuillez entrer une adresse e-mail.
     notvalid: Cette valeur n\'est pas une adresse e-mail valide.
+  firstname:
+    max: Votre prénom doit comporter au plus {{ limit }} caractères'
+  lastname:
+    max: Votre nom doit comporter au plus {{ limit }} caractères'
 trick:
   image:
     notvalid: Veuillez télécharger une image valide.

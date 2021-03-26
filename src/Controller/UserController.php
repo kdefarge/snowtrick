@@ -4,12 +4,12 @@ namespace App\Controller;
 
 use App\Form\UserType;
 use App\Service\TrickHelper;
+use App\Service\UserHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user")
@@ -28,7 +28,7 @@ class UserController extends AbstractController
     /**
      * @Route("/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function edit(Request $request, UserHelper $userHelper): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
@@ -36,22 +36,20 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+            return $this->redirectToRoute('user_edit');
+        }
 
-            $encodedPassword = $passwordEncoder->encodePassword(
-                $user,
-                $form->get('plainPassword')->getData()
-            );
-
-            $user->setPassword($encodedPassword);
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('user_account');
+        /** @var FormeInterface $form_resetpassword */
+        if($userHelper->isMakeProcessResetPasswordForm($form_resetpassword, $this->getUser())) {
+            return $this->redirectToRoute('user_edit');
         }
 
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'form_resetpassword' => $form_resetpassword->createView(),
         ]);
     }
 
