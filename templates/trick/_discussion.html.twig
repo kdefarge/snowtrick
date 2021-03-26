@@ -1,5 +1,6 @@
 <div class="container-fluid" id="discussion-area">
 
+    {% if app.user %}
     {{ form_start(form) }}
     <div class="row justify-content-md-center">
         <div class="col-12 col-lg-8 mt-3 pt-1 border-top"></div>
@@ -14,7 +15,8 @@
         </div>
     </div>
     {{ form_end(form) }}
-    
+    {% endif %}
+
     <div class="row justify-content-md-center text-left">
         <div class="col col-lg-8 mt-3 pt-3 border-top">
             {% for discussion in trick.discussions %}
@@ -23,7 +25,9 @@
                 <p class="border flex-grow-1 p-2">
                     <span class="text-muted">
                         {{ discussion.user.username }} - {{ discussion.createdDate|date('Y-m-d H:i:s') }}
+                        {% if is_granted('owner', discussion.user) %}
                         <a href="#" onclick="deleteMessage('{{ path('discussion_delete', {'id': discussion.id}) }}');return false;"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+                        {% endif %}
                     </span>
                     <br />{{ discussion.message }}
                 </p>
