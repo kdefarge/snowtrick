@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Category;
 use App\Entity\Trick;
 use App\Entity\Media;
+use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
 
@@ -12,11 +13,13 @@ class TrickHelper
 {
     private $entityManager;
     private $uploadedManager;
+    private $trickRepository;
     
-    public function __construct(EntityManagerInterface $entityManager, UploadedManager $uploadedManager)
+    public function __construct(EntityManagerInterface $entityManager, UploadedManager $uploadedManager, TrickRepository $trickRepository)
     {
         $this->entityManager = $entityManager;
         $this->uploadedManager = $uploadedManager;
+        $this->trickRepository = $trickRepository;
     }
 
     public function formToDatabase(Trick $trick, Form $form) : void //on peut pas utiliser un forminterface???
@@ -46,6 +49,7 @@ class TrickHelper
 
     public function delete(Trick $trick)
     {
+        $category = $trick->getCategory();
         $medias = $trick->getMedia();
         foreach($medias as $media) {
             /** @var Media $media */
@@ -57,6 +61,7 @@ class TrickHelper
         $this->entityManager->flush();
         $this->entityManager->remove($trick);
         $this->entityManager->flush();
+        $this->checkAndDeleteNotUsedCategory($category);
     }
 
     public function deleteOneMedia(Media $media)
@@ -69,6 +74,15 @@ class TrickHelper
         }
         $this->uploadedManager->deleteUploadedFile($media->getLink());
         $this->entityManager->remove($media);
+        $this->entityManager->flush();
+    }
+
+    public function checkAndDeleteNotUsedCategory(Category $category)
+    {
+        $trick = $this->trickRepository->findOneBy(['category'=>$category]);
+        if ($trick)
+            return;
+        $this->entityManager->remove($category);
         $this->entityManager->flush();
     }
 }
