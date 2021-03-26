@@ -36,6 +36,7 @@ class UserType extends AbstractType
             ])
             ->add('firstname', TextType::class, [
                 'label' => 'user.firstname.label',
+                'required' => false,
                 'constraints' => [
                     new Length([
                         'max' => 50,
@@ -45,6 +46,7 @@ class UserType extends AbstractType
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'user.lastname.label',
+                'required' => false,
                 'constraints' => [
                     new Length([
                         'max' => 50,

@@ -17,16 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/account", name="user_account", methods={"GET"})
-     */
-    public function show(): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-        return $this->render('user/show.html.twig', ['user' => $this->getUser()]);
-    }
-
-    /**
-     * @Route("/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/account", name="user_account", methods={"GET","POST"})
      */
     public function edit(Request $request, UserHelper $userHelper): Response
     {
@@ -36,17 +27,17 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->redirectToRoute('user_edit');
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('user_account');
         }
 
         /** @var FormeInterface $form_resetpassword */
         if($userHelper->isMakeProcessResetPasswordForm($form_resetpassword, $this->getUser())) {
-            return $this->redirectToRoute('user_edit');
+            return $this->redirectToRoute('user_account');
         }
 
-        return $this->render('user/edit.html.twig', [
+        return $this->render('user/account.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
             'form_resetpassword' => $form_resetpassword->createView(),

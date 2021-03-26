@@ -34,7 +34,7 @@ form:
     emailsent :
       title : E-mail de réinitialisation du mot de passe envoyé
     reset :
-      title : réinitialisez votre mot de passe
+      title : Réinitialisez votre mot de passe
       button : Réinitialiser le mot de passe
       linknovalid : Un problème est survenu lors de la validation de votre demande de réinitialisation
   trick :
