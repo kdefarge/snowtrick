@@ -36,10 +36,10 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Adresse email :',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez entrer une adresse e-mail.'
+                        'message' => 'user.email.notblank'
                     ]),
                     new Email([
-                        'message' => 'Cette valeur n\'est pas une adresse e-mail valide.'
+                        'message' => 'user.email.notvalid'
                     ])
                 ]
             ])
