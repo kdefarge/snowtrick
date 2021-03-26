@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\UserType;
+use App\Service\TrickHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,12 +58,16 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, SessionInterface $session): Response
+    public function delete(Request $request, SessionInterface $session, TrickHelper $trickHelp): Response
     {   
         $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
 
         if ($this->isCsrfTokenValid('delete-account', $request->request->get('_token'))) {
+
+            $tricks = $user->getTricks();
+            foreach($tricks as $trick)
+                $trickHelp->delete($trick);
 
             $this->get('security.token_storage')->setToken(null);
             $session->invalidate(0);
