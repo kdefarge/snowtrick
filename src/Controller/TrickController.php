@@ -25,18 +25,16 @@ class TrickController extends AbstractController
      */
     public function new(Request $request, TrickHelper $trickHelper, MediaRepository $mediaRepository): Response
     {
-        if(!$this->isGranted('ROLE_USER')) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
-        }
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         $trick = new Trick();
-        $trick->setUser($this->getUser());
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $trick->setUser($this->getUser());
             $trickHelper->formToDatabase($trick, $form);
             
             /** @var Media $media */
@@ -63,17 +61,12 @@ class TrickController extends AbstractController
      */
     public function show(Request $request, Trick $trick): Response
     {
-
-        if(!$this->isGranted('ROLE_USER')) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
-        }
-
         $discussion = new Discussion();
+        
         $form = $this->createForm(DiscussionFormType::class, $discussion);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($this->isGranted('ROLE_USER') && $form->isSubmitted() && $form->isValid()) {
             $discussion->setUser($this->getUser());
             $discussion->setTrick($trick);
             $entityManager = $this->getDoctrine()->getManager();
@@ -94,17 +87,8 @@ class TrickController extends AbstractController
      */
     public function edit(Request $request, Trick $trick, TrickHelper $trickHelper): Response
     {
-        if(!$this->isGranted('ROLE_USER')) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
-        }
-
-        $user = $this->getUser();
-
-        if($user->getId()!=$trick->getUser()->getId()) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
-        }
+        $user = $trick->getUser();
+        $this->denyAccessUnlessGranted('owner', $user);
         
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -125,17 +109,8 @@ class TrickController extends AbstractController
      */
     public function delete(Request $request, Trick $trick, TrickHelper $trickHelper): Response
     {
-        if(!$this->isGranted('ROLE_USER')) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
-        }
-
-        $user = $this->getUser();
-
-        if($user->getId()!=$trick->getUser()->getId()) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
-        }
+        $user = $trick->getUser();
+        $this->denyAccessUnlessGranted('owner', $user);
 
         if ($this->isCsrfTokenValid('delete', $request->request->get('_token'))) {
             $trickHelper->delete($trick);
@@ -149,17 +124,9 @@ class TrickController extends AbstractController
      */
     public function deleteMedia(Request $request, Media $media, TrickHelper $trickHelper): Response
     {
-        if(!$this->isGranted('ROLE_USER')) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
-        }
-
-        $user = $this->getUser();
         $trick = $media->getTrick();
-        if($user->getId()!=$trick->getUser()->getId()) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
-        }
+        $user = $trick->getUser();
+        $this->denyAccessUnlessGranted('owner', $user);
 
         if ($this->isCsrfTokenValid('delete', $request->request->get('_token'))) {
             $trickHelper->deleteOneMedia($media);
@@ -173,26 +140,16 @@ class TrickController extends AbstractController
      */
     public function updateFeaturedMedia(Media $media): Response
     {
-        if(!$this->isGranted('ROLE_USER')) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
-        }
-
-        $user = $this->getUser();
         $trick = $media->getTrick();
+        $user = $trick->getUser();
+        $this->denyAccessUnlessGranted('owner', $user);
 
-        if($media->getIsVideoLink())
-            return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()]);
-
-        if($user->getId()!=$trick->getUser()->getId()) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
+        if(!$media->getIsVideoLink()) {
+            $trick->setFeaturedMedia($media);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($trick);
+            $entityManager->flush();
         }
-
-        $trick->setFeaturedMedia($media);
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($trick);
-        $entityManager->flush();
         
         return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()]);
     }
@@ -202,17 +159,8 @@ class TrickController extends AbstractController
      */
     public function removeFeaturedMedia(Trick $trick): Response
     {
-        if(!$this->isGranted('ROLE_USER')) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
-        }
-
-        $user = $this->getUser();
-
-        if($user->getId()!=$trick->getUser()->getId()) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
-        }
+        $user = $trick->getUser();
+        $this->denyAccessUnlessGranted('owner', $user);
 
         $trick->setFeaturedMedia(null);
         $entityManager = $this->getDoctrine()->getManager();
@@ -228,17 +176,8 @@ class TrickController extends AbstractController
      */
     public function deleteDiscussion(Request $request, Discussion $discussion): Response
     {
-        if(!$this->isGranted('ROLE_USER')) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
-        }
-
-        $user = $this->getUser();
-
-        if($user->getId()!=$discussion->getUser()->getId()) {
-            $this->addFlash('warning', 'user.needed');
-            return $this->redirectToRoute('homepage');
-        }
+        $user = $discussion->getUser();
+        $this->denyAccessUnlessGranted('owner', $user);
 
         $trick = $discussion->getTrick();
 
