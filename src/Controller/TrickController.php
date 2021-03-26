@@ -89,12 +89,15 @@ class TrickController extends AbstractController
     {
         $user = $trick->getUser();
         $this->denyAccessUnlessGranted('owner', $user);
+
+        $category = $trick->getCategory();
         
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $trickHelper->formToDatabase($trick, $form);
+            $trickHelper->checkAndDeleteNotUsedCategory($category);
             return $this->redirectToRoute('trick_show', ['id' => $trick->getId()]);
         }
 
