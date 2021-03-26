@@ -6,19 +6,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="app_login")
+     * @Security("!is_granted('ROLE_USER')")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        if($this->isGranted('ROLE_USER')) {
-            $this->addFlash('warning', 'user.restricted');
-            return $this->redirectToRoute('homepage');
-        }
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
