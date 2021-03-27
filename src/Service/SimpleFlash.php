@@ -2,15 +2,17 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SimpleFlash
 {
     private $flashBag;
     
-    public function __construct(FlashBagInterface $flashBag)
+    public function __construct(SessionInterface $session)
     {
-        $this->flashBag = $flashBag;
+        /** @var Session $session */
+        $this->flashBag = $session->getFlashBag();
     }
 
     public function typeNone(string $type, string $message)
