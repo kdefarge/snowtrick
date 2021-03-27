@@ -4,6 +4,6 @@
 
 {% block simplebase %}
 
-{% include 'reset_password/_form.html.twig' %}
+{% include 'reset_password/_form.html.twig' with {'target_route': path('app_reset_password')} %}
 
 {% endblock %}

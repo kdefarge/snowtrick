@@ -27,15 +27,15 @@
 
     </div>
 
-    <div class="col-12 mb-2">
+    <div class="col-12 mb-2" id="account-edit">
 
-        {% include 'user/_form.html.twig' %}
+        {% include 'user/_form.html.twig' with {'target_route': path('user_account', {'_fragment': 'account-edit'})} %}
 
     </div>
 
-    <div class="col-12 mb-2">
+    <div class="col-12 mb-2" id="account-resetpassword">
 
-        {% include 'reset_password/_form.html.twig' %}
+        {% include 'reset_password/_form.html.twig' with {'target_route': path('user_account', {'_fragment': 'account-resetpassword'})} %}
 
     </div>
     
