@@ -19,9 +19,9 @@
 
     <div class="row justify-content-md-center text-left">
         <div class="col col-lg-8 mt-3 pt-3 border-top">
-            {% for discussion in trick.discussions %}
+            {% for discussion in discussions %}
             <div class="d-flex">
-                <img src="{{ app.user.pictureLink ? upload_asset ~ app.user.pictureLink : asset('images/no-image.png') }}" class="mr-3 imgDiscussion" alt="" />
+                <img src="{{ discussion.user.pictureLink ? upload_asset ~ discussion.user.pictureLink : asset('images/no-image.png') }}" class="mr-3 imgDiscussion" alt="" />
                 <p class="border flex-grow-1 p-2">
                     <span class="text-muted">
                         {{ discussion.user.username }} - {{ discussion.createdDate|date('Y-m-d H:i:s') }}

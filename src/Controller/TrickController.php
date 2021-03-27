@@ -7,6 +7,7 @@ use App\Entity\Media;
 use App\Entity\Trick;
 use App\Form\DiscussionFormType;
 use App\Form\TrickType;
+use App\Repository\DiscussionRepository;
 use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use App\Service\TrickHelper;
@@ -59,7 +60,7 @@ class TrickController extends AbstractController
     /**
      * @Route("/{id}", name="trick_show", methods={"GET","POST"})
      */
-    public function show(Request $request, Trick $trick): Response
+    public function show(Request $request, Trick $trick, DiscussionRepository $discussionRepository): Response
     {
         $discussion = new Discussion();
         
@@ -79,6 +80,7 @@ class TrickController extends AbstractController
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
+            'discussions'  => $discussionRepository->findBy(['trick' => $trick],['id' => 'DESC']),
         ]);
     }
 
