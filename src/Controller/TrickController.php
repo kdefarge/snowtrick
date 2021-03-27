@@ -14,6 +14,7 @@ use App\Service\TrickHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -60,8 +61,12 @@ class TrickController extends AbstractController
     /**
      * @Route("/{id}", name="trick_show", methods={"GET","POST"})
      */
-    public function show(Request $request, Trick $trick, DiscussionRepository $discussionRepository): Response
+    public function show(int $id, Request $request, DiscussionRepository $discussionRepository, TrickRepository $trickRepository): Response
     {
+        $trick = $trickRepository->findOneJoinedToUserAndCategory($id);
+        if(!$trick)
+            throw $this->createNotFoundException('La figure n\'existe pas !');
+
         $discussion = new Discussion();
         
         $form = $this->createForm(DiscussionFormType::class, $discussion);
@@ -87,8 +92,12 @@ class TrickController extends AbstractController
     /**
      * @Route("/{id}/edit", name="trick_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Trick $trick, TrickHelper $trickHelper): Response
+    public function edit(int $id, Request $request, TrickRepository $trickRepository, TrickHelper $trickHelper): Response
     {
+        $trick = $trickRepository->findOneJoinedToUserAndCategory($id);
+        if(!$trick)
+            throw $this->createNotFoundException('La figure n\'existe pas !');
+        
         $user = $trick->getUser();
         $this->denyAccessUnlessGranted('owner', $user);
 
