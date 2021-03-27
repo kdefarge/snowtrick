@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -35,7 +36,7 @@ class UserHelper
         $this->trickHelper = $trickHelper;
     }
 
-    public function isMakeProcessResetPasswordForm(&$form, $user) : bool
+    public function isMakeProcessResetPasswordForm(&$form, User $user) : bool
     {
         $form = $this->formFacotry->create(ChangePasswordFormType::class);
         $form->handleRequest($this->requestStack->getCurrentRequest());
@@ -63,12 +64,12 @@ class UserHelper
         return false;
     }
 
-    private function deleteProfilePictureFileIfExist($user) {
+    private function deleteProfilePictureFileIfExist(User $user) {
         if($link = $user->getPictureLink())
             $this->uploadedManager->deleteUploadedFile($link);
     }
 
-    public function editProfilPicture($user, $uploadedFile) : void
+    public function editProfilPicture(User $user, $uploadedFile) : void
     {
         $this->deleteProfilePictureFileIfExist($user);
 
@@ -78,7 +79,7 @@ class UserHelper
         $this->entityManager->flush();
     }
 
-    public function deleteProfilPicture($user) : void
+    public function deleteProfilPicture(User $user) : void
     {
         $this->deleteProfilePictureFileIfExist($user);
 
@@ -87,7 +88,7 @@ class UserHelper
         $this->entityManager->flush();
     }
 
-    public function deleteAccount($user)
+    public function deleteAccount(User $user)
     {
         $tricks = $user->getTricks();
         foreach($tricks as $trick)
