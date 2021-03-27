@@ -9,13 +9,31 @@
         <h1 class="mb-3">{{ 'user.edit.title'|trans }}</h1>
     </div>
 
-    <div class="col-12">
+    <div class="col-12 mb-2">
+
+        {{ form_start(form_profilpicture) }}
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <h2 class="mb-3 text-center">{{ 'Image de profil'|trans }}</h2>
+                </div>
+                <div class="col-10 col-sm-8 col-md-7 col-lg-5 border text-center bg-light py-3 px-sm-5">
+                    <img src="{{ app.user.pictureLink ? upload_asset ~ app.user.pictureLink : asset('images/no-image.png') }}" class="rounded-circle" width="200px" height="200px" alt="">
+                    <br />
+                    <a class="btn btn-danger my-2" href="{{ path('user_delete_profilpicture') }}" role="button">Supprimer</a>
+                    {{ form_widget(form_profilpicture) }}
+                </div>
+            </div>
+        {{ form_end(form_profilpicture) }}
+
+    </div>
+
+    <div class="col-12 mb-2">
 
         {% include 'user/_form.html.twig' %}
 
     </div>
 
-    <div class="col-12">
+    <div class="col-12 mb-2">
 
         {% include 'reset_password/_form.html.twig' %}
 

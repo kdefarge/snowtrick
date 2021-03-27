@@ -45,7 +45,7 @@ class User implements UserInterface
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $picture_link;
 
@@ -186,7 +186,7 @@ class User implements UserInterface
         return $this->picture_link;
     }
 
-    public function setPictureLink(string $picture_link): self
+    public function setPictureLink(?string $picture_link): self
     {
         $this->picture_link = $picture_link;
 

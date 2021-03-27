@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
+use App\Form\ProfilPictureFormType;
 use App\Form\UserType;
-use App\Service\TrickHelper;
+use App\Service\UploadedManager;
 use App\Service\UserHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -19,7 +19,7 @@ class UserController extends AbstractController
     /**
      * @Route("/account", name="user_account", methods={"GET","POST"})
      */
-    public function edit(Request $request, UserHelper $userHelper): Response
+    public function edit(Request $request, UserHelper $userHelper, UploadedManager $uploadedManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
@@ -37,36 +37,49 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_account');
         }
 
+        $form_profilpicture = $this->createForm(ProfilPictureFormType::class);
+        $form_profilpicture->handleRequest($request);
+        
+        if ($form_profilpicture->isSubmitted() && $form_profilpicture->isValid()) {
+
+            $uploadedFile = $form_profilpicture->get('picture')->getData();
+            $userHelper->editProfilPicture($user, $uploadedFile);
+
+            return $this->redirectToRoute('user_account');
+        }
+
         return $this->render('user/account.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
             'form_resetpassword' => $form_resetpassword->createView(),
+            'form_profilpicture' => $form_profilpicture->createView(),
         ]);
     }
 
     /**
      * @Route("/", name="user_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, SessionInterface $session, TrickHelper $trickHelp): Response
+    public function delete(Request $request, UserHelper $userHelper): Response
     {   
         $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
 
-        if ($this->isCsrfTokenValid('delete-account', $request->request->get('_token'))) {
-
-            $tricks = $user->getTricks();
-            foreach($tricks as $trick)
-                $trickHelp->delete($trick);
-
+        if ($this->isCsrfTokenValid('delete', $request->get('_token'))) {
+            $userHelper->deleteAccount($user);
             $this->get('security.token_storage')->setToken(null);
-            $session->invalidate(0);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
-            $entityManager->flush();
-
-            $this->addFlash('danger', 'user.deleted');
-            return $this->redirectToRoute('homepage');
         }
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @Route("/", name="user_delete_profilpicture", methods={"GET"})
+     */
+    public function deleteProfilPicture(UserHelper $userHelper): Response
+    {   
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $user = $this->getUser();
+        $userHelper->deleteProfilPicture($user);
+        return $this->redirectToRoute('user_account');
     }
 }

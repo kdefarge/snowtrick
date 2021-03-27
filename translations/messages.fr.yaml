@@ -18,9 +18,11 @@ user:
   email:
     label: "Adresse email :"
   firstname:
-    label: "Prénom :"   
+    label: "Prénom :"
   lastname:
-    label: "Nom de famille :"   
+    label: "Nom de famille :"
+  picture:
+    label: "Nouvelle photo de profil :"
 form:
   send : Envoyer
   edit : Modifier

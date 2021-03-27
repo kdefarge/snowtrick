@@ -4,11 +4,8 @@ namespace App\Service;
 
 use App\Form\ChangePasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\Test\FormInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -20,10 +17,13 @@ class UserHelper
     private EntityManagerInterface $entityManager;
     private SessionInterface $session;
     private SimpleFlash $simpleFlash;
+    private UploadedManager $uploadedManager;
+    private TrickHelper $trickHelper;
     
     public function __construct(RequestStack $requestStack, FormFactoryInterface $formFacotry, 
         UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $entityManager, 
-        SessionInterface $session, SimpleFlash $simpleFlash)
+        SessionInterface $session, SimpleFlash $simpleFlash, UploadedManager $uploadedManager,
+        TrickHelper $trickHelper)
     {
         $this->requestStack = $requestStack;
         $this->formFacotry = $formFacotry;
@@ -31,6 +31,8 @@ class UserHelper
         $this->entityManager = $entityManager;
         $this->session = $session;
         $this->simpleFlash = $simpleFlash;
+        $this->uploadedManager = $uploadedManager;
+        $this->trickHelper = $trickHelper;
     }
 
     public function isMakeProcessResetPasswordForm(&$form, $user) : bool
@@ -59,5 +61,45 @@ class UserHelper
         }
 
         return false;
+    }
+
+    private function deleteProfilePictureFileIfExist($user) {
+        if($link = $user->getPictureLink())
+            $this->uploadedManager->deleteUploadedFile($link);
+    }
+
+    public function editProfilPicture($user, $uploadedFile) : void
+    {
+        $this->deleteProfilePictureFileIfExist($user);
+
+        $link = $this->uploadedManager->moveAndGetLink($uploadedFile, 'profilpicture');
+        $user->setPictureLink($link);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
+
+    public function deleteProfilPicture($user) : void
+    {
+        $this->deleteProfilePictureFileIfExist($user);
+
+        $user->setPictureLink(null);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
+
+    public function deleteAccount($user)
+    {
+        $tricks = $user->getTricks();
+        foreach($tricks as $trick)
+            $this->trickHelper->delete($trick);
+
+        $this->deleteProfilePictureFileIfExist($user);
+
+        $this->session->invalidate(0);
+
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
+
+        $this->simpleFlash->typeDanger('user.deleted');
     }
 }

@@ -44,7 +44,14 @@ class UploadedManager
             return null;
         
         $media = new Media();
+        $media->setLink($this->moveAndGetLink($uploadedFile,$directory));
+        return $media;
+    }
+
+    public function moveAndGetLink(UploadedFile $uploadedFile, string $directory) : string
+    {
         $newFilename = uniqid().'.'.$uploadedFile->guessExtension();
+
         try {
             $uploadedFile->move(
                 $this->params->get('upload_directory').$directory,
@@ -54,8 +61,7 @@ class UploadedManager
             // ... handle exception if something happens during file upload
         }
 
-        $media->setLink($directory.'/'.$newFilename);
-        return $media;
+        return $directory.'/'.$newFilename;
     }
 
     public function deleteUploadedFile(string $link) : void
