@@ -14,15 +14,18 @@ class TrickHelper
     private $entityManager;
     private $uploadedManager;
     private $trickRepository;
+    private $embedLinkMaker;
     
-    public function __construct(EntityManagerInterface $entityManager, UploadedManager $uploadedManager, TrickRepository $trickRepository)
+    public function __construct(EntityManagerInterface $entityManager, UploadedManager $uploadedManager, 
+        TrickRepository $trickRepository, EmbedLinkMaker $embedLinkMaker)
     {
         $this->entityManager = $entityManager;
         $this->uploadedManager = $uploadedManager;
         $this->trickRepository = $trickRepository;
+        $this->embedLinkMaker = $embedLinkMaker;
     }
 
-    public function formToDatabase(Trick $trick, Form $form) : void //on peut pas utiliser un forminterface???
+    public function formToDatabase(Trick $trick, Form $form) : void
     {
         $newcategory = $form->get('newcategory')->getData();
         if('' !== $newcategory && null !== $newcategory) {
@@ -44,6 +47,18 @@ class TrickHelper
                 }
             }
         }
+        
+        $videolinksCollection = $form->get('videolinks')->getData();
+        foreach($videolinksCollection as $link) {
+            if($link && $link = $this->embedLinkMaker->create($link)){
+                $media = new Media();
+                $media->setTrick($trick);
+                $media->setLink($link);
+                $media->setIsVideoLink(true);
+                $this->entityManager->persist($media);
+            }
+        }
+
         $this->entityManager->flush();
     }
 
@@ -53,7 +68,8 @@ class TrickHelper
         $medias = $trick->getMedia();
         foreach($medias as $media) {
             /** @var Media $media */
-            $this->uploadedManager->deleteUploadedFile($media->getLink());
+            if($media->getIsVideoLink())
+                $this->uploadedManager->deleteUploadedFile($media->getLink());
             $this->entityManager->remove($media);
         }
         $trick->setFeaturedMedia(null);
@@ -72,7 +88,8 @@ class TrickHelper
             $trick->setFeaturedMedia(null);
             $this->entityManager->persist($trick);
         }
-        $this->uploadedManager->deleteUploadedFile($media->getLink());
+        if($media->getIsVideoLink())
+            $this->uploadedManager->deleteUploadedFile($media->getLink());
         $this->entityManager->remove($media);
         $this->entityManager->flush();
     }

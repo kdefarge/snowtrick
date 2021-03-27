@@ -10,9 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
 
 class TrickType extends AbstractType
 {
@@ -31,6 +31,17 @@ class TrickType extends AbstractType
             ])
             ->add('medias', CollectionType::class, [
                 'entry_type' => FileType::class,
+                'entry_options' => [
+                    'label' => false,
+                    'required' => false,
+                ],
+                'mapped' => false,
+                'required' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+            ])
+            ->add('videolinks', CollectionType::class, [
+                'entry_type' => UrlType::class,
                 'entry_options' => [
                     'label' => false,
                     'required' => false,

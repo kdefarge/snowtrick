@@ -6,21 +6,23 @@ function deleteMessage(actionLink) {
 }
 
 jQuery(document).ready(function() {
-    // Get the ul that holds the collection of tags
-    var $tagsCollectionHolder = $('ul.medias');
 
-    if($tagsCollectionHolder.length) {
-        // count the current form inputs we have (e.g. 2), use that as the new
-        // index when inserting a new item (e.g. 2)
-        $tagsCollectionHolder.data('index', $tagsCollectionHolder.find(':input').length);
-
-        // add a delete link to all of the existing tag form li elements
-        $tagsCollectionHolder.find('li').each(function() {
-            addTagFormDeleteLink($(this));
-        });
-
-        addFormToCollection('medias');
+    function initCollectionHolder($class) {
+        var $collectionHolder = $('ul.'+$class);
+        if($collectionHolder.length) {
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+            // add a delete link to all of the existing tag form li elements
+            $collectionHolder.find('li').each(function() {
+                addTagFormDeleteLink($(this));
+            });
+        }
+        addFormToCollection($class);
     }
+
+    initCollectionHolder('medias');
+    initCollectionHolder('videolinks');
 
     $('body').on('click', '.add_item_link', function(e) {
         var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');

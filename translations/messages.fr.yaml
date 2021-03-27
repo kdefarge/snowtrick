@@ -41,4 +41,5 @@ form:
       linknovalid : Un problème est survenu lors de la validation de votre demande de réinitialisation
   trick :
     uploadimage : Rajouter une image
-    addimage : Ajouter un image supplémentaire
+    addimage : Ajouter une image supplémentaire
+    addlink : Ajouter un lien supplémentaire
