@@ -19,6 +19,21 @@ class DiscussionRepository extends ServiceEntityRepository
         parent::__construct($registry, Discussion::class);
     }
 
+    public function findByTrickJoinedToUser($trick) : array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT d, u
+            FROM App\Entity\Discussion d
+            INNER JOIN d.user u
+            WHERE d.trick = :trick
+            ORDER BY d.id DESC'
+        )->setParameter('trick', $trick);
+
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Discussion[] Returns an array of Discussion objects
     //  */

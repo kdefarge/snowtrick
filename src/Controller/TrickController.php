@@ -80,7 +80,7 @@ class TrickController extends AbstractController
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
-            'discussions'  => $discussionRepository->findBy(['trick' => $trick],['id' => 'DESC']),
+            'discussions'  => $discussionRepository->findByTrickJoinedToUser($trick),
         ]);
     }
 
