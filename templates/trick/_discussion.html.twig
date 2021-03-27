@@ -18,8 +18,9 @@
     {% endif %}
 
     <div class="row justify-content-md-center text-left">
-        <div class="col col-lg-8 mt-3 pt-3 border-top">
+        <div class="col col-lg-8 mt-3 pt-3 border-top" id="discussions">
             {% for discussion in discussions %}
+            <div class="discussion-message">
             <div class="d-flex">
                 <img src="{{ discussion.user.pictureLink ? upload_asset ~ discussion.user.pictureLink : asset('images/no-image.png') }}" class="mr-3 imgDiscussion" alt="" />
                 <p class="border flex-grow-1 p-2">
@@ -32,12 +33,11 @@
                     <br />{{ discussion.message }}
                 </p>
             </div>
+            </div>
             {% else %}
                 Pas de discussion
             {% endfor %}
         </div>
     </div>
-    
-    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Charger plus</a>
     
 </div>
