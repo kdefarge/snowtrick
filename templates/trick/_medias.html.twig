@@ -18,7 +18,9 @@
                 {% if is_granted('owner', trick.user) %}
                     <div class="d-flex justify-content-end w-100">
                         <div class="border w-60">
+                            {% if not media.isVideoLink %}
                             <a href="{{ path('trick_update_featuredmedia', {'id': media.id}) }}"><img src="{{ asset('images/theme/b-edit-media.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
+                            {% endif %}
                             <a href="#" onclick="deleteMessage('{{ path('media_delete', {'id': media.id}) }}');return false;"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
                         </div>
                     </div>

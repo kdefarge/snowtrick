@@ -68,7 +68,7 @@ class TrickHelper
         $medias = $trick->getMedia();
         foreach($medias as $media) {
             /** @var Media $media */
-            if($media->getIsVideoLink())
+            if(!$media->getIsVideoLink())
                 $this->uploadedManager->deleteUploadedFile($media->getLink());
             $this->entityManager->remove($media);
         }
@@ -88,7 +88,7 @@ class TrickHelper
             $trick->setFeaturedMedia(null);
             $this->entityManager->persist($trick);
         }
-        if($media->getIsVideoLink())
+        if(!$media->getIsVideoLink())
             $this->uploadedManager->deleteUploadedFile($media->getLink());
         $this->entityManager->remove($media);
         $this->entityManager->flush();
