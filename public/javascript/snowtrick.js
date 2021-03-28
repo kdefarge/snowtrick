@@ -17,8 +17,9 @@ jQuery(document).ready(function() {
             $collectionHolder.find('li').each(function() {
                 addTagFormDeleteLink($(this));
             });
+            
+            addFormToCollection($class);
         }
-        addFormToCollection($class);
     }
 
     initCollectionHolder('medias');
