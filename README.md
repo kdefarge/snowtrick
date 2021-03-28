@@ -4,7 +4,7 @@ Snowtrick is a Symfony web application
 
 ## Installation
 
-- install Snowtrick with composer
+*   install Snowtrick with composer
 
 ```bash
 git clone git@github.com:kdefarge/snowtrick.git
@@ -14,7 +14,7 @@ composer install
 
 ## Setup
 
-- update .env file
+*   update .env file
 
 ```bash
 # MariaDB (dont forget version X.X.X with your version)
@@ -23,7 +23,7 @@ DATABASE_URL="mysql://USER:PASSWRD@SERVER:PORT/DB_NAME?serverVersion=mariadb-X.X
 MAILER_DSN=smtp://USER:PASSWORD@SERVER_SMTP:PORT
 ```
 
-- install database
+*   install database
 
 ```bash
 # Doctrine can create the DB_NAME database for you
@@ -32,7 +32,7 @@ php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
 ```
 
-- Run dev fixture
+*   Run dev fixture
 
 ```bash
 # load all the 'dev' fixtures
