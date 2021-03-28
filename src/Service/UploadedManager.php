@@ -22,6 +22,7 @@ class UploadedManager
         $this->constraintImage = new File([
             'maxSize' => '2048k',
             'mimeTypes' => [
+                    'image/svg',
                     'image/png',
                     'image/bmp',
                     'image/gif',

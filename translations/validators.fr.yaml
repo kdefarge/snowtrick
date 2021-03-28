@@ -1,5 +1,6 @@
 user:
   username:
+    unique: Ce nom d\'utilisateur est dejà utilisé
     notblank: Veuillez entrer un nom d\'utilisateur.
     regex: Votre nom d'utilisateur doit commencer par une lettre. Il ne peut contenir que des caratères alphanumérique et _. Il doit être compris entre 4 et 20 caractères.
     notvalid: Utilisateur non valide.
@@ -10,6 +11,7 @@ user:
   repeatpassword:
     notmatch: "Les champs du mot de passe doivent correspondre."
   email:
+    unique: Il existe déjà un compte avec cet e-mail
     notblank: Veuillez entrer une adresse e-mail.
     notvalid: Cette valeur n\'est pas une adresse e-mail valide.
   firstname:
@@ -20,3 +22,9 @@ trick:
   image:
     notvalid: Veuillez télécharger une image valide.
     maxsize: Cette image est trop volumineuse, le maximun est 2mo.
+  name:
+    unique: Il existe déjà un titre identique
+category:
+  name:
+    unique: Il existe déjà une catégorie identique veuillez la selectionner
+    

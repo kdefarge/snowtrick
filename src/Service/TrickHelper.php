@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Category;
 use App\Entity\Trick;
 use App\Entity\Media;
+use App\Repository\CategoryRepository;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Form;
@@ -15,22 +16,27 @@ class TrickHelper
     private $uploadedManager;
     private $trickRepository;
     private $embedLinkMaker;
+    private $categoryRepository;
     
     public function __construct(EntityManagerInterface $entityManager, UploadedManager $uploadedManager, 
-        TrickRepository $trickRepository, EmbedLinkMaker $embedLinkMaker)
+        TrickRepository $trickRepository, EmbedLinkMaker $embedLinkMaker, CategoryRepository $categoryRepository)
     {
         $this->entityManager = $entityManager;
         $this->uploadedManager = $uploadedManager;
         $this->trickRepository = $trickRepository;
         $this->embedLinkMaker = $embedLinkMaker;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function formToDatabase(Trick $trick, Form $form) : void
     {
         $newcategory = $form->get('newcategory')->getData();
         if('' !== $newcategory && null !== $newcategory) {
-            $category = new Category();
-            $category->setName($newcategory);
+            $category = $this->categoryRepository->findOneBy(['name'=>$newcategory]);
+            if(!($category instanceof Category)) {
+                $category = new Category();
+                $category->setName($newcategory);
+            }
             $trick->setCategory($category);
             $this->entityManager->persist($category);
         }
