@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Snowtrick - Error!{% endblock %}
+
+{% block body %}
+<header class="container-fluid d-flex flex-column justify-content-between bg-light vh-100 px-0" id="header" style="background-image:url({% block bg asset('images/error.svg') %})">
+
+    {{ include('menu.html.twig') }}
+
+    <div class="bg-light bg-opacity text-center">
+        <h1>{% block h1 'Error' %}</h1>
+    </div>
+    
+    <div class="align-self-end mb-5">
+        <a href="/">
+            <img src="{{ asset('images/theme/b-return.svg') }}" class="imgMenu m-5" alt="" />
+        </a>
+    </div>
+    
+</header>
+{% endblock %}

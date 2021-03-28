@@ -47,3 +47,13 @@ symfony server:start
 ```
 
 Open your browser and navigate to http://localhost:8000/. If everything is working, you’ll see a welcome page. Later, when you are finished working, stop the server by pressing Ctrl+C from your terminal.
+
+## Testing Error Pages during Development
+
+Source : [How to Customize Error Pages](https://symfony.com/doc/current/controller/error_pages.html)
+
+```bash
+# templates/bundles/TwigBundle/Exception/
+http://localhost/index.php/_error/{statusCode}
+http://localhost/index.php/_error/{statusCode}.{format}
+```
