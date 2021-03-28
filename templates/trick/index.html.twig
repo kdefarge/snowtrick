@@ -25,8 +25,8 @@
                 <td>{{ trick.createdDate ? trick.createdDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ trick.updatedDate ? trick.updatedDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('trick_show', {'id': trick.id}) }}">show</a>
-                    <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
+                    <a href="{{ path('trick_show', {'slug': trick.name}) }}">show</a>
+                    <a href="{{ path('trick_edit', {'slug': trick.name}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

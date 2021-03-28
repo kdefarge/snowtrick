@@ -34,7 +34,7 @@ class TrickRepository extends ServiceEntityRepository
         return $query->getArrayResult();
     }
 
-    public function findOneJoinedToUserAndCategory(int $id) : ?Trick
+    public function findOneJoinedToUserAndCategory(string $slug) : ?Trick
     {
         $entityManager = $this->getEntityManager();
 
@@ -44,9 +44,9 @@ class TrickRepository extends ServiceEntityRepository
             INNER JOIN t.user u
             INNER JOIN t.category c
             left JOIN t.featured_media m
-            WHERE t.id = :trick_id
+            WHERE t.name = :trick_name
             ORDER BY t.id DESC'
-        )->setParameter('trick_id', $id);
+        )->setParameter('trick_name', $slug);
 
         $result = $query->getResult();
         if(!$result)

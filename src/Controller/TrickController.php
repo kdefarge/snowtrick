@@ -49,7 +49,7 @@ class TrickController extends AbstractController
                 $entityManager->flush();
             }
 
-            return $this->redirectToRoute('trick_show', ['id' => $trick->getId()]);
+            return $this->redirectToRoute('trick_show', ['slug' => $trick->getName()]);
         }
 
         return $this->render('trick/new.html.twig', [
@@ -59,11 +59,11 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="trick_show", methods={"GET","POST"})
+     * @Route("/show/{slug}", name="trick_show", methods={"GET","POST"})
      */
-    public function show(int $id, Request $request, DiscussionRepository $discussionRepository, TrickRepository $trickRepository): Response
+    public function show(string $slug, Request $request, DiscussionRepository $discussionRepository, TrickRepository $trickRepository): Response
     {
-        $trick = $trickRepository->findOneJoinedToUserAndCategory($id);
+        $trick = $trickRepository->findOneJoinedToUserAndCategory($slug);
         if(!$trick)
             throw $this->createNotFoundException('La figure n\'existe pas !');
 
@@ -79,7 +79,7 @@ class TrickController extends AbstractController
             $entityManager->persist($discussion);
             $entityManager->flush();
 
-            return $this->redirectToRoute('trick_show', ['id' => $trick->getId(), '_fragment' => 'discussion-area']);
+            return $this->redirectToRoute('trick_show', ['slug' => $trick->getName(), '_fragment' => 'discussion-area']);
         }
 
         return $this->render('trick/show.html.twig', [
@@ -90,11 +90,11 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="trick_edit", methods={"GET","POST"})
+     * @Route("/show/{slug}/edit", name="trick_edit", methods={"GET","POST"})
      */
-    public function edit(int $id, Request $request, TrickRepository $trickRepository, TrickHelper $trickHelper): Response
+    public function edit(string $slug, Request $request, TrickRepository $trickRepository, TrickHelper $trickHelper): Response
     {
-        $trick = $trickRepository->findOneJoinedToUserAndCategory($id);
+        $trick = $trickRepository->findOneJoinedToUserAndCategory($slug);
         if(!$trick)
             throw $this->createNotFoundException('La figure n\'existe pas !');
         
@@ -109,7 +109,7 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $trickHelper->formToDatabase($trick, $form);
             $trickHelper->checkAndDeleteNotUsedCategory($category);
-            return $this->redirectToRoute('trick_show', ['id' => $trick->getId()]);
+            return $this->redirectToRoute('trick_show', ['slug' => $trick->getName()]);
         }
 
         return $this->render('trick/edit.html.twig', [
@@ -146,7 +146,7 @@ class TrickController extends AbstractController
             $trickHelper->deleteOneMedia($media);
         }
 
-        return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()]);
+        return $this->redirectToRoute('trick_edit', ['slug' => $trick->getName()]);
     }
 
     /**
@@ -165,7 +165,7 @@ class TrickController extends AbstractController
             $entityManager->flush();
         }
         
-        return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()]);
+        return $this->redirectToRoute('trick_edit', ['slug' => $trick->getName()]);
     }
 
     /**
@@ -181,7 +181,7 @@ class TrickController extends AbstractController
         $entityManager->persist($trick);
         $entityManager->flush();
         
-        return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()]);
+        return $this->redirectToRoute('trick_edit', ['slug' => $trick->getName()]);
     }
     
 
@@ -201,6 +201,6 @@ class TrickController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('trick_show', ['id' => $trick->getId(), '_fragment' => 'discussion-area']);
+        return $this->redirectToRoute('trick_show', ['slug' => $trick->getName(), '_fragment' => 'discussion-area']);
     }
 }
