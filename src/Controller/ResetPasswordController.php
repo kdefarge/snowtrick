@@ -118,7 +118,7 @@ class ResetPasswordController extends AbstractController
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {
-            $this->addFlash('warning', 'user.username.notfound');
+            $this->addFlash('warning', 'user.flash.warning.notfound');
             return $this->redirectToRoute('app_check_email');
         }
 

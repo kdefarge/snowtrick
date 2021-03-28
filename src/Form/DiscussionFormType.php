@@ -17,21 +17,10 @@ class DiscussionFormType extends AbstractType
     {
         $builder
             ->add('message', TextType::class, [
-                'label' => 'Message',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez entrer un nom d\'utilisateur.'
-                    ]),
-                    new Length([
-                        'min' => 3,
-                        'minMessage' => 'Votre message doit comporter au moins {{ limit }} caractères',
-                        'max' => 200,
-                        'maxMessage' => 'Votre message doit comporter au plus {{ limit }} caractères'
-                    ])
-                ]
+                'label' => 'discussion.label.message',
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Laisser un message',
+                'label' => 'discussion.button.submit',
             ])
         ;
     }

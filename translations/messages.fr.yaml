@@ -1,45 +1,59 @@
 word:
   delete: Supprimer
 user:
-  username:
-    label: "Nom d'utilisateur :"    
-    notfound: Aucun utilisateur trouvé.
-  newpassword:
-    label: "Nouveau mot de passe :"
-  repeatpassword: 
-    label: "Répéter le mot de passe :"
-  needed: Vous devez être connecté pour accéder à cette page !
-  restricted: Vous ne devez pas être connecté pour accéder à cette page !
-  account:
-    title: Mon compte
-  deleted: Votre compte vient d'être supprimé !
-  edit:
-    title: Modification de mon compte
-  email:
-    label: "Adresse email :"
-  firstname:
-    label: "Prénom :"
-  lastname:
-    label: "Nom de famille :"
-  picture:
-    label: "Nouvelle photo de profil :"
+  title:
+    edit: Modification de mon compte
+    picture: Image de profil
+    account: Mon compte
+    delete: Supprimer mon compte
+    infos: Informations
+  label:
+    username: Nom d'utilisateur
+    newpassword: Mot de passe
+    repeatpassword: Répéter le mot de passe
+    needed: Vous devez être connecté pour accéder à cette page !
+    restricted: Vous ne devez pas être connecté pour accéder à cette page !
+    deleted: Votre compte vient d'être supprimé !
+    email: Adresse email
+    firstname: Prénom
+    lastname: Nom de famille
+    picture: Changer la photo de profil
+  flash:
+    success:
+      resetpassword: le mot de pass a été réinitialisé!
+    warning:
+      notfound: Aucun utilisateur trouvé avec ce nom
+trick:
+  title:
+    edit: Modification du Trick
+  label:
+    name: Titre
+    content: Contenu
+    newcategory: Nouvelle existante
+    category: Catégorie existante
+    pictures: Ajouter des images
+    videolinks: Ajouter des liens (Youtube/Dailymotion/Vimeo)
+  button:
+    addimage: Ajouter une image supplémentaire
+    addlink: Ajouter un lien supplémentaire
+discussion:
+  label:
+    message: Votre message
+  button:
+    submit: Envoyer le message
 form:
-  send : Envoyer
-  edit : Modifier
-  save : Sauvegarder
-  confirm :
-    delete : Êtes-vous sûr de bien vouloir supprimer cet élément?
-  resetpassword : 
-    request :
-      title : Réinitialisez votre mot de passe
-      info : Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.
-    emailsent :
-      title : E-mail de réinitialisation du mot de passe envoyé
-    reset :
-      title : Réinitialisez votre mot de passe
-      button : Réinitialiser le mot de passe
-      linknovalid : Un problème est survenu lors de la validation de votre demande de réinitialisation
-  trick :
-    uploadimage : Rajouter une image
-    addimage : Ajouter une image supplémentaire
-    addlink : Ajouter un lien supplémentaire
+  send: Envoyer
+  edit: Modifier
+  save: Sauvegarder
+  confirm:
+    delete: Êtes-vous sûr de bien vouloir supprimer cet élément?
+  resetpassword: 
+    request:
+      title: Réinitialisez votre mot de passe
+      info: Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+    emailsent:
+      title: E-mail de réinitialisation du mot de passe envoyé
+    reset:
+      title: Réinitialisez votre mot de passe
+      button: Réinitialiser le mot de passe
+      linknovalid: Un problème est survenu lors de la validation de votre demande de réinitialisation

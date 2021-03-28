@@ -1,12 +1,12 @@
 {% extends 'simplebase.html.twig' %}
 
-{% block title %}{{ 'user.edit.title'|trans }}{% endblock %}
+{% block title %}{{ 'user.title.account'|trans }}{% endblock %}
 
 {% block simplebase %}
 
 <div class="row justify-content-center text-center pb-3">
     <div class="col-12">
-        <h1 class="mb-3">{{ 'user.edit.title'|trans }}</h1>
+        <h1 class="mb-3">{{ 'user.title.account'|trans }}</h1>
     </div>
 
     <div class="col-12 mb-2">
@@ -14,7 +14,7 @@
         {{ form_start(form_profilpicture) }}
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <h2 class="mb-3 text-center">{{ 'Image de profil'|trans }}</h2>
+                    <h2 class="mb-3 text-center">{{ 'user.title.picture'|trans }}</h2>
                 </div>
                 <div class="col-10 col-sm-8 col-md-7 col-lg-5 border text-center bg-light py-3 px-sm-5">
                     <img src="{{ app.user.pictureLink ? upload_asset ~ app.user.pictureLink : asset('images/no-image.png') }}" class="rounded-circle" width="200px" height="200px" alt="">
@@ -43,7 +43,7 @@
     <div class="col-12">
         <div class="row justify-content-center">
             <div class="col-12">
-                <h2 class="mb-3 text-center">Supprimer mon compte</h2>
+                <h2 class="mb-3 text-center">{{ 'user.title.delete'|trans }}</h2>
             </div>
 
             <div class="col-10 col-sm-8 col-md-7 col-lg-5 border text-center bg-light py-3 px-sm-5">

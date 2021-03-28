@@ -21,38 +21,21 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('email', EmailType::class, [
+                'label' => 'user.label.email',
+                'disabled' => true,
+            ])
             ->add('username', TextType::class, [
-                'label' => 'user.username.label',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'user.username.notvalid'
-                    ]),
-                    new Regex([
-                        'pattern' => '/^[A-Za-z]\\w{3,19}$/',
-                        'match' => true,
-                        'message' => 'user.username.regex'
-                    ])
-                ]
+                'label' => 'user.label.username',
+                'disabled' => true,
             ])
             ->add('firstname', TextType::class, [
-                'label' => 'user.firstname.label',
+                'label' => 'user.label.firstname',
                 'required' => false,
-                'constraints' => [
-                    new Length([
-                        'max' => 50,
-                        'maxMessage' => 'user.password.max'
-                    ]),
-                ]
             ])
             ->add('lastname', TextType::class, [
-                'label' => 'user.lastname.label',
+                'label' => 'user.label.lastname',
                 'required' => false,
-                'constraints' => [
-                    new Length([
-                        'max' => 50,
-                        'maxMessage' => 'user.password.max'
-                    ]),
-                ]
             ])
             ->add('edit', SubmitType::class, [
                 'label' => 'form.edit'

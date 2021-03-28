@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,17 +20,24 @@ class TrickType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('content')
+            ->add('name', TextType::class, [
+                'label' => 'trick.label.name',
+            ])
+            ->add('content', TextareaType::class, [
+                'label' => 'trick.label.content',
+            ])
             ->add('newcategory', TextType::class, [
+                'label' => 'trick.label.newcategory',
                 'mapped' => false,
                 'required' => false
             ])
             ->add('category', EntityType::class, [
+                'label' => 'trick.label.category',
                 'class' => Category::class,
                 'choice_label' => 'Name'
             ])
             ->add('medias', CollectionType::class, [
+                'label' => 'trick.label.pictures',
                 'entry_type' => FileType::class,
                 'entry_options' => [
                     'label' => false,
@@ -41,6 +49,7 @@ class TrickType extends AbstractType
                 'allow_delete' => true,
             ])
             ->add('videolinks', CollectionType::class, [
+                'label' => 'trick.label.videolinks',
                 'entry_type' => UrlType::class,
                 'entry_options' => [
                     'label' => false,

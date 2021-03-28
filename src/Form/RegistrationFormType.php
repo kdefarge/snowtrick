@@ -12,6 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class RegistrationFormType extends AbstractType
 {
@@ -19,44 +20,27 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, [
-                'label' => 'Nom d\'utilisateur :',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez entrer un nom d\'utilisateur.'
-                    ]),
-                    new Length([
-                        'min' => 4,
-                        'minMessage' => 'Votre nom d\'utilisateur doit comporter au moins {{ limit }} caractères',
-                        'max' => 20,
-                        'maxMessage' => 'Votre nom d\'utilisateur doit comporter au plus {{ limit }} caractères'
-                    ])
-                ]
+                'label' => 'user.label.username',
+                'empty_data' => '',
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Adresse email :',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'user.email.notblank'
-                    ]),
-                    new Email([
-                        'message' => 'user.email.notvalid'
-                    ])
-                ]
+                'label' => 'user.label.email',
             ])
             ->add('plainPassword', PasswordType::class, [
-                'label' => 'Mot de passe :',
+                'label' => 'user.label.newpassword',
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez entrer un mot de passe.'
+                        'message' => 'user.password.notblank'
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
+                        'minMessage' => 'user.password.min',
                         // max length allowed by Symfony for security reasons
-                        'max' => 4096
+                        'max' => 4096,
+                        'minMessage' => 'user.password.max',
                     ])
                 ]
             ])

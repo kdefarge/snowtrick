@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -25,6 +26,15 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(
+     *      message = "user.email.notblank"
+     * )
+     * @Assert\NotNull(
+     *      message = "user.email.notblank"
+     * )
+     * @Assert\Email(
+     *      message = "user.email.notvalid"
+     * )
      */
     private $email;
 
@@ -41,6 +51,15 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=50, unique=true)
+     * @Assert\NotBlank(
+     *      message = "user.username.notblank"
+     * )
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 25,
+     *      minMessage = "user.username.min",
+     *      maxMessage = "user.username.max"
+     * )
      */
     private $username;
 
@@ -76,11 +95,19 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Length(
+     *      max = 25,
+     *      maxMessage = "user.firstname.max"
+     * )
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Length(
+     *      max = 25,
+     *      maxMessage = "user.lastname.max"
+     * )
      */
     private $lastname;
 

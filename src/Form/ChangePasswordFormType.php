@@ -30,10 +30,10 @@ class ChangePasswordFormType extends AbstractType
                             'maxMessage' => 'user.password.max'
                         ]),
                     ],
-                    'label' => 'user.newpassword.label',
+                    'label' => 'user.label.newpassword',
                 ],
                 'second_options' => [
-                    'label' => 'user.repeatpassword.label',
+                    'label' => 'user.label.repeatpassword',
                 ],
                 'invalid_message' => 'user.repeatpassword.notmatch',
                 'mapped' => false,

@@ -1,29 +1,44 @@
 user:
   username:
-    unique: Ce nom d\'utilisateur est dejà utilisé
-    notblank: Veuillez entrer un nom d\'utilisateur.
-    regex: Votre nom d'utilisateur doit commencer par une lettre. Il ne peut contenir que des caratères alphanumérique et _. Il doit être compris entre 4 et 20 caractères.
+    unique: Ce nom d'utilisateur est dejà utilisé
+    notblank: Veuillez entrer un nom d'utilisateur.
+    min: Votre nom d'utilisateur doit comporter au moins {{ limit }} caractères
+    max: Votre nom d'utilisateur doit comporter au plus {{ limit }} caractères
     notvalid: Utilisateur non valide.
   password:
     notblank: Veuillez entrer un mot de passe.
     min: Votre mot de passe doit comporter au moins {{ limit }} caractères
-    max: Votre mot de passe doit comporter au plus {{ limit }} caractères'
+    max: Votre mot de passe doit comporter au plus {{ limit }} caractères
   repeatpassword:
     notmatch: "Les champs du mot de passe doivent correspondre."
   email:
     unique: Il existe déjà un compte avec cet e-mail
     notblank: Veuillez entrer une adresse e-mail.
-    notvalid: Cette valeur n\'est pas une adresse e-mail valide.
+    notvalid: Cette valeur n'est pas une adresse e-mail valide.
   firstname:
-    max: Votre prénom doit comporter au plus {{ limit }} caractères'
+    max: Votre prénom doit comporter au plus {{ limit }} caractères
   lastname:
-    max: Votre nom doit comporter au plus {{ limit }} caractères'
+    max: Votre nom doit comporter au plus {{ limit }} caractères
+  picture:
+    maxsize: L'image est trop grande ({{ size }} {{ suffix }}). La taille maximale autorisée est {{ limit }} {{ suffix }}.
+    mimetypes: Veuillez télécharger une image (svg, png, bmp, gif, jpeg, webp) valide
 trick:
   image:
     notvalid: Veuillez télécharger une image valide.
     maxsize: Cette image est trop volumineuse, le maximun est 2mo.
   name:
     unique: Il existe déjà un titre identique
+    notblank: votre titre ne peut être vide
+    min: Votre titre doit comporter au moins {{ limit }} caractères
+    max: Votre titre doit comporter au plus {{ limit }} caractères
+  content:
+    notblank: votre titre ne peut être vide
+    min: Votre titre doit comporter au moins {{ limit }} caractères
 category:
   name:
     unique: Il existe déjà une catégorie identique veuillez la selectionner
+discussion:
+  message:
+    notblank: votre message ne peut être vide
+    min: Votre message doit comporter au moins {{ limit }} caractères
+    max: Votre message doit comporter au plus {{ limit }} caractères

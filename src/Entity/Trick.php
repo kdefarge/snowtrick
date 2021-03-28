@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
@@ -35,11 +36,27 @@ class Trick
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank(
+     *      message = "trick.name.notblank"
+     * )
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 25,
+     *      minMessage = "trick.name.min",
+     *      maxMessage = "trick.name.max"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(
+     *      message = "trick.content.notblank"
+     * )
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "trick.content.min",
+     * )
      */
     private $content;
 

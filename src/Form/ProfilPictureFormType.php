@@ -15,11 +15,11 @@ class ProfilPictureFormType extends AbstractType
     {
         $builder
             ->add('picture', FileType::class, [
-                'label' => 'user.picture.label',
+                'label' => 'user.label.picture',
                 'constraints' => [
                     new File([
                         'maxSize' => '2048k',
-                        'maxSizeMessage' => 'L\'image est trop grande ({{ size }} {{ suffix }}). La taille maximale autorisée est {{ limit }} {{ suffix }}.',
+                        'maxSizeMessage' => 'user.picture.maxsize',
                         'mimeTypes' => [
                             'image/svg',
                             'image/png',
@@ -28,7 +28,7 @@ class ProfilPictureFormType extends AbstractType
                             'image/jpeg',
                             'image/webp',
                         ],
-                        'mimeTypesMessage' => 'Veuillez télécharger une image (png, bmp, gif, jpeg, webp) valide',
+                        'mimeTypesMessage' => 'user.picture.mimetypes',
                     ]),
                 ],
             ])

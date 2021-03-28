@@ -34,8 +34,9 @@ class UserController extends AbstractController
 
         /** @var FormeInterface $form_resetpassword */
         if($userHelper->isMakeProcessResetPasswordForm($form_resetpassword, $this->getUser())) {
-            return $this->redirectToRoute('user_account');
+            return $this->redirectToRoute('user_account',['_fragment' => 'header']);
         }
+        dump('test ');
 
         $form_profilpicture = $this->createForm(ProfilPictureFormType::class);
         $form_profilpicture->handleRequest($request);

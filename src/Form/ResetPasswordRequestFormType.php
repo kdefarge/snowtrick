@@ -15,16 +15,11 @@ class ResetPasswordRequestFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('username', TextType::class, [
-            'label' => 'user.username.label',
+            'label' => 'user.label.username',
             'constraints' => [
                 new NotBlank([
                     'message' => 'user.username.notvalid'
                 ]),
-                new Regex([
-                    'pattern' => '/^[A-Za-z]\\w{3,19}$/',
-                    'match' => true,
-                    'message' => 'user.username.notvalid'
-                ])
             ]
         ]);
     }

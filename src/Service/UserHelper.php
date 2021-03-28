@@ -57,7 +57,7 @@ class UserHelper
             $this->session->remove('ResetPasswordCheckEmail');
             $this->session->remove('ResetPasswordToken');
             
-            $this->simpleFlash->typeSuccess('le mot de pass a été réinitialisé!');
+            $this->simpleFlash->typeSuccess('user.flash.success.resetpassword');
             return true;
         }
 
