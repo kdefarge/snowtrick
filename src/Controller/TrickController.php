@@ -6,15 +6,14 @@ use App\Entity\Discussion;
 use App\Entity\Media;
 use App\Entity\Trick;
 use App\Form\DiscussionFormType;
-use App\Form\TrickType;
 use App\Repository\DiscussionRepository;
-use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
-use App\Service\TrickHelper;
+use App\Service\MediaHelper;
+use App\Service\TrickManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -25,37 +24,23 @@ class TrickController extends AbstractController
     /**
      * @Route("/new", name="trick_new", methods={"GET","POST"})
      */
-    public function new(Request $request, TrickHelper $trickHelper, MediaRepository $mediaRepository): Response
+    public function new(TrickManager $trickManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $trick = new Trick();
+        $trick->setUser($this->getUser());
 
-        $form = $this->createForm(TrickType::class, $trick);
-        $form->handleRequest($request);
+        $form = $trickManager->new($trick);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $trick->setUser($this->getUser());
-            $trickHelper->formToDatabase($trick, $form);
-            
-            /** @var Media $media */
-            $media = $mediaRepository->findOneBy(['trick' => $trick, 'isVideoLink' => false]);
-
-            if($media) {
-                $trick->setFeaturedMedia($media);
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($trick);
-                $entityManager->flush();
-            }
-
-            return $this->redirectToRoute('trick_show', ['slug' => $trick->getName()]);
+        if ($form instanceof Form) {
+            return $this->render('trick/new.html.twig', [
+                'trick' => $trick,
+                'form' => $form->createView(),
+            ]);
         }
 
-        return $this->render('trick/new.html.twig', [
-            'trick' => $trick,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('trick_show', ['slug' => $trick->getName()]);
     }
 
     /**
@@ -92,42 +77,40 @@ class TrickController extends AbstractController
     /**
      * @Route("/show/{slug}/edit", name="trick_edit", methods={"GET","POST"})
      */
-    public function edit(string $slug, Request $request, TrickRepository $trickRepository, TrickHelper $trickHelper): Response
+    public function edit(string $slug, TrickRepository $trickRepository, TrickManager $trickManager): Response
     {
         $trick = $trickRepository->findOneJoinedToUserAndCategory($slug);
-        if(!$trick)
+
+        if(!($trick instanceof Trick)) {
             throw $this->createNotFoundException('La figure n\'existe pas !');
+        }
         
         $user = $trick->getUser();
         $this->denyAccessUnlessGranted('owner', $user);
 
-        $category = $trick->getCategory();
-        
-        $form = $this->createForm(TrickType::class, $trick);
-        $form->handleRequest($request);
+        $form = $trickManager->edit($trick);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $trickHelper->formToDatabase($trick, $form);
-            $trickHelper->checkAndDeleteNotUsedCategory($category);
-            return $this->redirectToRoute('trick_show', ['slug' => $trick->getName()]);
+        if ($form instanceof Form) {
+            return $this->render(
+                'trick/edit.html.twig', [
+                    'trick' => $trick,
+                    'form' => $form->createView(),
+            ]);
         }
 
-        return $this->render('trick/edit.html.twig', [
-            'trick' => $trick,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('trick_show', ['slug' => $trick->getName()]);
     }
 
     /**
      * @Route("/{id}", name="trick_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Trick $trick, TrickHelper $trickHelper): Response
+    public function delete(Request $request, Trick $trick, TrickManager $trickManager): Response
     {
         $user = $trick->getUser();
         $this->denyAccessUnlessGranted('owner', $user);
 
         if ($this->isCsrfTokenValid('delete', $request->request->get('_token'))) {
-            $trickHelper->delete($trick);
+            $trickManager->delete($trick);
         }
 
         return $this->redirectToRoute('homepage', ['_fragment' => 'tricks']);
@@ -136,14 +119,14 @@ class TrickController extends AbstractController
     /**
      * @Route("/media/{id}", name="media_delete", methods={"DELETE"})
      */
-    public function deleteMedia(Request $request, Media $media, TrickHelper $trickHelper): Response
+    public function deleteMedia(Request $request, Media $media, MediaHelper $mediaHelper): Response
     {
         $trick = $media->getTrick();
         $user = $trick->getUser();
         $this->denyAccessUnlessGranted('owner', $user);
 
         if ($this->isCsrfTokenValid('delete', $request->request->get('_token'))) {
-            $trickHelper->deleteOneMedia($media);
+            $mediaHelper->delete($media);
         }
 
         return $this->redirectToRoute('trick_edit', ['slug' => $trick->getName()]);

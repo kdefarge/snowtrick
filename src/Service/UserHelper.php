@@ -19,12 +19,12 @@ class UserHelper
     private SessionInterface $session;
     private SimpleFlash $simpleFlash;
     private UploadedManager $uploadedManager;
-    private TrickHelper $trickHelper;
+    private TrickManager $trickManager;
     
     public function __construct(RequestStack $requestStack, FormFactoryInterface $formFacotry, 
         UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $entityManager, 
         SessionInterface $session, SimpleFlash $simpleFlash, UploadedManager $uploadedManager,
-        TrickHelper $trickHelper)
+        TrickManager $trickManager)
     {
         $this->requestStack = $requestStack;
         $this->formFacotry = $formFacotry;
@@ -33,7 +33,7 @@ class UserHelper
         $this->session = $session;
         $this->simpleFlash = $simpleFlash;
         $this->uploadedManager = $uploadedManager;
-        $this->trickHelper = $trickHelper;
+        $this->trickManager = $trickManager;
     }
 
     public function isMakeProcessResetPasswordForm(&$form, User $user) : bool
@@ -92,7 +92,7 @@ class UserHelper
     {
         $tricks = $user->getTricks();
         foreach($tricks as $trick)
-            $this->trickHelper->delete($trick);
+            $this->trickManager->delete($trick);
 
         $this->deleteProfilePictureFileIfExist($user);
 
@@ -101,6 +101,6 @@ class UserHelper
         $this->entityManager->remove($user);
         $this->entityManager->flush();
 
-        $this->simpleFlash->typeDanger('user.deleted');
+        $this->simpleFlash->typeDanger('user.flash.warning.deleted');
     }
 }

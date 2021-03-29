@@ -38,15 +38,12 @@ class UploadedManager
         return $this->params->get('upload_directory').$directory;
     }
 
-    public function imageValidToMediaEntity(UploadedFile $uploadedFile, string $directory) : ?Media
+    public function validateImage(UploadedFile $uploadedFile) : bool
     {
         $errors = $this->validator->validate($uploadedFile, $this->constraintImage);
         if(count($errors) > 0)
-            return null;
-        
-        $media = new Media();
-        $media->setLink($this->moveAndGetLink($uploadedFile,$directory));
-        return $media;
+            return false;
+        return true;
     }
 
     public function moveAndGetLink(UploadedFile $uploadedFile, string $directory) : string

@@ -17,7 +17,7 @@ class EmbedLinkMaker
     {
         $parse = parse_url($url);
         
-        if(!$parse || !$parse['host'] || !$parse['path'])
+        if(!isset($parse) || !isset($parse['host']) || !isset($parse['path']))
             return null;
         
         switch ($parse['host']) {
@@ -41,12 +41,12 @@ class EmbedLinkMaker
 
     private function isYoutubeCom($parse) : ?string
     {
-        if(!$parse['query'])
+        if(!isset($parse['query']))
             return null;
         
         parse_str($parse['query'], $data);
         
-        if($data['v']);
+        if(isset($data['v']));
             return self::EMBED_YOUTUBE.$data['v'];
 
         return null;        

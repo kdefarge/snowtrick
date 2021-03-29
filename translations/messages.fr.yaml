@@ -11,9 +11,6 @@ user:
     username: Nom d'utilisateur
     newpassword: Mot de passe
     repeatpassword: Répéter le mot de passe
-    needed: Vous devez être connecté pour accéder à cette page !
-    restricted: Vous ne devez pas être connecté pour accéder à cette page !
-    deleted: Votre compte vient d'être supprimé !
     email: Adresse email
     firstname: Prénom
     lastname: Nom de famille
@@ -23,6 +20,7 @@ user:
       resetpassword: le mot de pass a été réinitialisé!
     warning:
       notfound: Aucun utilisateur trouvé avec ce nom
+      deleted: Votre compte vient d'être supprimé !
 trick:
   title:
     edit: Modification du Trick
