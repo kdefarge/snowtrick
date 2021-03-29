@@ -1,4 +1,7 @@
-# Snowtrick [![SymfonyInsight](https://insight.symfony.com/projects/c53b2a8b-160d-408c-802e-8bada2cedf44/mini.svg)](https://insight.symfony.com/projects/c53b2a8b-160d-408c-802e-8bada2cedf44)
+# Snowtrick
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/0474e6502be6414081ad57df8633d5fb)](https://www.codacy.com/gh/kdefarge/snowtrick/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kdefarge/snowtrick&amp;utm_campaign=Badge_Grade)
+[![SymfonyInsight](https://insight.symfony.com/projects/c53b2a8b-160d-408c-802e-8bada2cedf44/mini.svg)](https://insight.symfony.com/projects/c53b2a8b-160d-408c-802e-8bada2cedf44)
 
 Snowtrick is a Symfony web application
 
