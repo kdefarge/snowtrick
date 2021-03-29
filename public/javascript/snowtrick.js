@@ -90,8 +90,9 @@ jQuery(document).ready(function() {
                 $(current).show();
             }
             currentLoaded+=discussionMax;
-            if(currentLoaded>=$messageCollection.length)
+            if(currentLoaded>=$messageCollection.length) {
                 this.remove();
+            }
         });
         $("#discussions").append($extendButton);
     }
