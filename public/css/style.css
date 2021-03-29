@@ -14,7 +14,7 @@ html {
 #header .navbar .show,
 #header .navbar .collapsing {
   opacity: 0.9;
-  filter: (opacity=90);
+  filter: opacity(90%);
 }
 
 #header .show .nav-item,
@@ -44,7 +44,7 @@ html {
 
 .medias__img {
   max-height: 272px;
-  max-width: 100%
+  max-width: 100%;
 }
 
 @media (min-width: 768px) {
