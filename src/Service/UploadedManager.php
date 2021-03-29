@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\Media;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -12,13 +11,11 @@ use Symfony\Component\Validator\Validation;
 
 class UploadedManager
 {
-    private $validator;
     private $constraintImage;
     private $params;
     
     public function __construct(ParameterBagInterface $params)
     {
-        $this->validator = Validation::createValidator();
         $this->constraintImage = new File([
             'maxSize' => '2048k',
             'mimeTypes' => [
@@ -40,7 +37,8 @@ class UploadedManager
 
     public function validateImage(UploadedFile $uploadedFile) : bool
     {
-        $errors = $this->validator->validate($uploadedFile, $this->constraintImage);
+        $validator = Validation::createValidator();
+        $errors = $validator->validate($uploadedFile, $this->constraintImage);
         if(count($errors) > 0)
             return false;
         return true;

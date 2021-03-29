@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Form\ProfilPictureFormType;
 use App\Form\UserType;
-use App\Service\UploadedManager;
 use App\Service\UserHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +18,7 @@ class UserController extends AbstractController
     /**
      * @Route("/account", name="user_account", methods={"GET","POST"})
      */
-    public function edit(Request $request, UserHelper $userHelper, UploadedManager $uploadedManager): Response
+    public function edit(Request $request, UserHelper $userHelper): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();

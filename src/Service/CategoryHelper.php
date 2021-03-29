@@ -22,7 +22,7 @@ class CategoryHelper
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function FindOrCreateCategory(string $categoryName) : Category
+    public function findOrCreateCategory(string $categoryName) : Category
     {
         $category = $this->categoryRepository->findOneBy(['name' => $categoryName]);
         if($category instanceof Category)

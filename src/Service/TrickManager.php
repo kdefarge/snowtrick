@@ -37,7 +37,7 @@ class TrickManager
         $this->mediaRepository = $mediaRepository;
     }
 
-    public function new($trick) : ?Form
+    public function new(Trick $trick) : ?Form
     {
         $form = $this->formProcess($trick);
         if($form instanceof Form)
@@ -53,7 +53,7 @@ class TrickManager
         return null;
     }
 
-    public function edit($trick) : ?Form
+    public function edit(Trick $trick) : ?Form
     {
         $category = $trick->getCategory();
 
@@ -95,7 +95,7 @@ class TrickManager
         
         if('' !== $newcategory && null !== $newcategory) {
 
-            $category = $this->categoryHelper->FindOrCreateCategory($newcategory);
+            $category = $this->categoryHelper->findOrCreateCategory($newcategory);
 
             if($category instanceof Category) {
                 $trick->setCategory($category);
