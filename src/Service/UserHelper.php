@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Form\ChangePasswordFormType;
+use App\Repository\ResetPasswordRequestRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -12,19 +13,20 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserHelper
 {
-    private RequestStack $requestStack;
-    private FormFactoryInterface $formFacotry;
-    private UserPasswordEncoderInterface $userPasswordEncoder;
-    private EntityManagerInterface $entityManager;
-    private SessionInterface $session;
-    private SimpleFlash $simpleFlash;
-    private UploadedManager $uploadedManager;
-    private TrickManager $trickManager;
+    private $requestStack;
+    private $formFacotry;
+    private $userPasswordEncoder;
+    private $entityManager;
+    private $session;
+    private $simpleFlash;
+    private $uploadedManager;
+    private $trickManager;
+    private $resetPasswordRequestRepository;
     
     public function __construct(RequestStack $requestStack, FormFactoryInterface $formFacotry, 
         UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $entityManager, 
         SessionInterface $session, SimpleFlash $simpleFlash, UploadedManager $uploadedManager,
-        TrickManager $trickManager)
+        TrickManager $trickManager, ResetPasswordRequestRepository $resetPasswordRequestRepository)
     {
         $this->requestStack = $requestStack;
         $this->formFacotry = $formFacotry;
@@ -34,6 +36,7 @@ class UserHelper
         $this->simpleFlash = $simpleFlash;
         $this->uploadedManager = $uploadedManager;
         $this->trickManager = $trickManager;
+        $this->resetPasswordRequestRepository = $resetPasswordRequestRepository;
     }
 
     public function isMakeProcessResetPasswordForm(&$form, User $user) : bool
@@ -97,6 +100,11 @@ class UserHelper
         $this->deleteProfilePictureFileIfExist($user);
 
         $this->session->invalidate(0);
+
+        $resets = $this->resetPasswordRequestRepository->findBy(['user' => $user]);
+        foreach($resets as $reset) {
+            $this->entityManager->remove($reset);
+        }
 
         $this->entityManager->remove($user);
         $this->entityManager->flush();

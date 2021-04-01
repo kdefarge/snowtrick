@@ -24,23 +24,9 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'user.label.email',
             ])
-            ->add('plainPassword', PasswordType::class, [
-                'label' => 'user.label.newpassword',
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
+            ->add('plainPassword', ChangePasswordFormType::class, [
                 'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'user.password.notblank'
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'user.password.min',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                        'maxMessage' => 'user.password.max',
-                    ])
-                ]
+                'label' => false,
             ])
         ;
     }
