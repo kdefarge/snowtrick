@@ -10,7 +10,6 @@
 
     <div class="container-md px-0 py-5">
 
-        {{ form_start(registrationForm) }}
 
         <div class="row justify-content-center">
             <div class="col-12">
@@ -19,18 +18,14 @@
 
             <div class="col-10 col-sm-8 col-md-7 col-lg-5 border text-center bg-light py-3 px-sm-5">
             
-
-                {{ form_row(registrationForm) }}
+                {{ form(registrationForm) }}
                 
-                <button type="submit" class="btn btn-primary">Créer un compte</button>
-                
-                <br /><a href="{{ path('app_forgot_password_request') }}">{{ 'form.resetpassword.reset.title'|trans }}</a>
+                <a href="{{ path('app_forgot_password_request') }}">{{ 'form.resetpassword.reset.title'|trans }}</a>
                 
             </div>
         
         </div>
 
-        {{ form_end(registrationForm) }}
         
     </div>
     

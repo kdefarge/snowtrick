@@ -14,11 +14,16 @@ class UserChecker implements UserCheckerInterface
         if (!$user instanceof AppUser) {
             return;
         }
-        
-        if (!$user->isVerified()) {
-            throw new CustomUserMessageAccountStatusException('Votre compte n\'est pas encore vérifié!');
-        }
     }
 
-    public function checkPostAuth(UserInterface $user) { }
+    public function checkPostAuth(UserInterface $user)
+    {
+        if (!$user instanceof AppUser) {
+            return;
+        }
+        
+        if (!$user->isVerified()) {
+            throw new CustomUserMessageAccountStatusException('user.notverified');
+        }
+    }
 }

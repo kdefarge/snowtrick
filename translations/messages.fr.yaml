@@ -18,6 +18,8 @@ user:
   flash:
     success:
       resetpassword: le mot de pass a été réinitialisé!
+      verified: Votre adresse e-mail a été vérifiée.
+      registered: Enregistrement réussi, veuillez confirmer votre email
     warning:
       notfound: Aucun utilisateur trouvé avec ce nom
       deleted: Votre compte vient d'être supprimé !
@@ -43,6 +45,7 @@ form:
   send: Envoyer
   edit: Modifier
   save: Sauvegarder
+  register: Créer un compte
   confirm:
     delete: Êtes-vous sûr de bien vouloir supprimer cet élément?
   resetpassword: 
