@@ -18,10 +18,14 @@ function addFormToCollection($collection) {
     $collection.append($newForm);
     addTagFormDeleteLink($newForm);
 
-    $newForm.find("[type=file]").change( function(event) {
+    var $input = $newForm.find("[type=file]")
+
+    $input.change( function(event) {
         let inputFile = event.currentTarget;
         $(inputFile).parent().find(".custom-file-label").html($(inputFile).val());
     });
+
+    $input.parent().find(".custom-file-label").html("Selectionner un fichier");
 }
 
 $(".form-collection").each(function( index, collection ) {
@@ -30,7 +34,12 @@ $(".form-collection").each(function( index, collection ) {
 
     var $elements = $collection.children();
 
-    // $collection.empty();
+    // hide bug : Can't reloaded file liste
+    if($elements.find("[type=file]").length) {
+        $collection.empty();
+        $elements = $collection.children();
+    }
+    // hide bug : END
 
     $collection.data("index",$elements.length);
 
@@ -46,14 +55,4 @@ $(".form-collection").each(function( index, collection ) {
     if(!$elements.length) {
         addFormToCollection($collection);
     }
-});
-
-$("[type=file]").each(function( index, input ) {
-    var $input = $(input);
-    $($input).next(".custom-file-label").html($input.val());
-});
-
-$(".custom-file-input").change( function(event) {
-    let inputFile = event.currentTarget;
-    $(inputFile).parent().find(".custom-file-label").html($(inputFile).val());
 });
