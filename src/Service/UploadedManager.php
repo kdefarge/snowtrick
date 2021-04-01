@@ -8,13 +8,15 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UploadedManager
 {
     private $constraintImage;
     private $params;
+    private $validator;
     
-    public function __construct(ParameterBagInterface $params)
+    public function __construct(ParameterBagInterface $params, ValidatorInterface $validator)
     {
         $this->constraintImage = new File([
             'maxSize' => '2048k',
@@ -28,6 +30,7 @@ class UploadedManager
             ],
         ]);
         $this->params = $params;
+        $this->validator = $validator;
     }
 
     public function getUploadDirectory(string $directory) : string
@@ -37,8 +40,7 @@ class UploadedManager
 
     public function validateImage(UploadedFile $uploadedFile) : bool
     {
-        $validator = Validation::createValidator();
-        $errors = $validator->validate($uploadedFile, $this->constraintImage);
+        $errors = $this->validator->validate($uploadedFile, $this->constraintImage);
         if(count($errors) > 0)
             return false;
         return true;

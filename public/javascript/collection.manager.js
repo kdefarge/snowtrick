@@ -53,7 +53,7 @@ $("[type=file]").each(function( index, input ) {
     $($input).next(".custom-file-label").html($input.val());
 });
 
-$('.custom-file-input').change( function(event) {
+$(".custom-file-input").change( function(event) {
     let inputFile = event.currentTarget;
     $(inputFile).parent().find(".custom-file-label").html($(inputFile).val());
 });
