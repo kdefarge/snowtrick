@@ -104,7 +104,7 @@ class TrickManager
             }
         }
         
-        $uploadedCollection = $form->get('medias')->getData();
+        $uploadedCollection = $form->get('pictures')->getData();
         $this->mediaHelper->newImage($uploadedCollection, $trick);
         
         $linkCollection = $form->get('videolinks')->getData();

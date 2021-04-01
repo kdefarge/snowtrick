@@ -20,15 +20,15 @@ function addFormToCollection($collection) {
 
     $newForm.find("[type=file]").change( function(event) {
         let inputFile = event.currentTarget;
-        $(inputFile).parent().find('.custom-file-label').html($(inputFile).val());
+        $(inputFile).parent().find(".custom-file-label").html($(inputFile).val());
     });
 }
 
 $(".form-collection").each(function( index, collection ) {
     var $collection = $(collection);
-    var collectionId = $collection.attr("id")
+    var collectionId = $collection.attr("id");
 
-    $elements = $collection.children();
+    var $elements = $collection.children();
 
     // $collection.empty();
 
@@ -50,10 +50,10 @@ $(".form-collection").each(function( index, collection ) {
 
 $("[type=file]").each(function( index, input ) {
     var $input = $(input);
-    $($input).next('.custom-file-label').html($input.val());
+    $($input).next(".custom-file-label").html($input.val());
 });
 
 $('.custom-file-input').change( function(event) {
     let inputFile = event.currentTarget;
-    $(inputFile).parent().find('.custom-file-label').html($(inputFile).val());
+    $(inputFile).parent().find(".custom-file-label").html($(inputFile).val());
 });

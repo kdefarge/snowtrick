@@ -36,7 +36,7 @@ class TrickType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'Name'
             ])
-            ->add('medias', CollectionType::class, [
+            ->add('pictures', CollectionType::class, [
                 'label' => 'trick.label.pictures',
                 'entry_type' => FileType::class,
                 'entry_options' => [

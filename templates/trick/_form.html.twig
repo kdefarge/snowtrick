@@ -4,8 +4,8 @@
     {{ form_row(form.newcategory) }}
     {{ form_row(form.category) }}
 
-    <button type="button" class="add_item_link btn btn-info" data-collection-holder="{{ form.medias.vars.id }}">{{ 'trick.button.addimage'|trans }}</button>
-    {{ form_row(form.medias, {'attr': {'class': 'form-collection'}}) }}
+    <button type="button" class="add_item_link btn btn-info" data-collection-holder="{{ form.pictures.vars.id }}">{{ 'trick.button.addimage'|trans }}</button>
+    {{ form_row(form.pictures, {'attr': {'class': 'form-collection'}}) }}
 
     <button type="button" class="add_item_link btn btn-info" data-collection-holder="{{ form.videolinks.vars.id }}">{{ 'trick.button.addlink'|trans }}</button>
     {{ form_row(form.videolinks, {'attr': {'class': 'form-collection'}}) }}
