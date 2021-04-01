@@ -3,14 +3,13 @@
     {{ form_row(form.content) }}
     {{ form_row(form.newcategory) }}
     {{ form_row(form.category) }}
-    {{ form_label(form.medias) }}
-    <ul class="medias" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}"></ul>
-    <button type="button" class="add_item_link btn btn-info" data-collection-holder-class="medias">{{ 'trick.button.addimage'|trans }}</button>
-    {{ form_widget(form.medias) }}
-    {{ form_label(form.videolinks) }}
-    <ul class="videolinks" data-prototype="{{ form_widget(form.videolinks.vars.prototype)|e('html_attr') }}"></ul>
-    <button type="button" class="add_item_link btn btn-info" data-collection-holder-class="videolinks">{{ 'trick.button.addlink'|trans }}</button>
-    {{ form_widget(form.videolinks) }}
+
+    <button type="button" class="add_item_link btn btn-info" data-collection-holder="{{ form.medias.vars.id }}">{{ 'trick.button.addimage'|trans }}</button>
+    {{ form_row(form.medias, {'attr': {'class': 'form-collection'}}) }}
+
+    <button type="button" class="add_item_link btn btn-info" data-collection-holder="{{ form.videolinks.vars.id }}">{{ 'trick.button.addlink'|trans }}</button>
+    {{ form_row(form.videolinks, {'attr': {'class': 'form-collection'}}) }}
+    
     <br />
     {{ form_row(form.save) }}
 {{ form_end(form) }}
