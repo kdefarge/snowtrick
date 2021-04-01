@@ -26,13 +26,16 @@ user:
 trick:
   title:
     edit: Modification du Trick
+    new: Nouveau trick
+    category: Choix de la catégorie
+    pictures: Ajouter des images
+    videolinks: Ajouter des liens
+    videotype: Youtube - Dailymotion - Vimeo
   label:
     name: Titre
     content: Contenu
-    newcategory: Nouvelle existante
-    category: Catégorie existante
-    pictures: Ajouter des images
-    videolinks: Ajouter des liens (Youtube/Dailymotion/Vimeo)
+    newcategory: Nouvelle
+    category: Existante
   button:
     addimage: Ajouter une image supplémentaire
     addlink: Ajouter un lien supplémentaire

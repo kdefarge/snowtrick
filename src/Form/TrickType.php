@@ -37,7 +37,7 @@ class TrickType extends AbstractType
                 'choice_label' => 'Name'
             ])
             ->add('pictures', CollectionType::class, [
-                'label' => 'trick.label.pictures',
+                'label' => false,
                 'entry_type' => FileType::class,
                 'entry_options' => [
                     'label' => false,
@@ -49,7 +49,7 @@ class TrickType extends AbstractType
                 'allow_delete' => true,
             ])
             ->add('videolinks', CollectionType::class, [
-                'label' => 'trick.label.videolinks',
+                'label' => false,
                 'entry_type' => UrlType::class,
                 'entry_options' => [
                     'label' => false,

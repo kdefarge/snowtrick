@@ -1,15 +1,54 @@
 {{ form_start(form) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.content) }}
-    {{ form_row(form.newcategory) }}
-    {{ form_row(form.category) }}
 
-    <button type="button" class="add_item_link btn btn-info" data-collection-holder="{{ form.pictures.vars.id }}">{{ 'trick.button.addimage'|trans }}</button>
-    {{ form_row(form.pictures, {'attr': {'class': 'form-collection'}}) }}
+<div class="row justify-content-center pt-3">
+    <div class="col-12">
+        <h1 class="mb-3 text-center">{{ 'trick.title.new'|trans }}</h1>
+    </div>
 
-    <button type="button" class="add_item_link btn btn-info" data-collection-holder="{{ form.videolinks.vars.id }}">{{ 'trick.button.addlink'|trans }}</button>
-    {{ form_row(form.videolinks, {'attr': {'class': 'form-collection'}}) }}
-    
-    <br />
-    {{ form_row(form.save) }}
+    <div class="col-10 col-sm-8 col-md-7 col-lg-5 border text-center bg-light py-3 px-sm-5">
+        {{ form_row(form.name) }}
+        {{ form_row(form.content) }}
+    </div>
+</div>
+
+<div class="row justify-content-center pt-3">
+    <div class="col-12">
+        <h2 class="mb-3 text-center">{{ 'trick.title.category'|trans }}</h2>
+    </div>
+
+    <div class="col-10 col-sm-8 col-md-7 col-lg-5 border text-center bg-light py-3 px-sm-5">
+        {{ form_row(form.newcategory) }}
+        {{ form_row(form.category) }}
+    </div>
+</div>
+
+<div class="row justify-content-center pt-3">
+    <div class="col-12">
+        <h2 class="mb-3 text-center">{{ 'trick.title.pictures'|trans }}</h2>
+    </div>
+
+    <div class="col-10 col-sm-8 col-md-7 col-lg-5 border text-center bg-light pt-3 px-sm-5">
+        <button type="button" class="add_item_link btn btn-info mb-3" data-collection-holder="{{ form.pictures.vars.id }}">{{ 'trick.button.addimage'|trans }}</button>
+        {{ form_row(form.pictures, {'attr': {'class': 'form-collection'}}) }}
+    </div>
+</div>
+
+<div class="row justify-content-center pt-3">
+    <div class="col-12">
+        <h2 class="mb-3 text-center">{{ 'trick.title.videolinks'|trans }}</h2>
+        <h3 class="mb-3 text-center">{{ 'trick.title.videotype'|trans }}</h3>
+    </div>
+
+    <div class="col-10 col-sm-8 col-md-7 col-lg-5 border text-center bg-light pt-3 px-sm-5">
+        <button type="button" class="add_item_link btn btn-info mb-3" data-collection-holder="{{ form.videolinks.vars.id }}">{{ 'trick.button.addlink'|trans }}</button>
+        {{ form_row(form.videolinks, {'attr': {'class': 'form-collection'}}) }}
+    </div>
+</div>
+
+<div class="row justify-content-center py-3">
+    <div class="col-10 col-sm-8 col-md-7 col-lg-5 border text-center bg-light pt-3 px-sm-5">
+        {{ form_row(form.save) }}
+    </div>
+</div>
+
 {{ form_end(form) }}
