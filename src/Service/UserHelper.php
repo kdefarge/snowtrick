@@ -21,12 +21,12 @@ class UserHelper
     private $simpleFlash;
     private $uploadedManager;
     private $trickManager;
-    private $resetPasswordRequestRepository;
+    private $resetPwRepository;
     
     public function __construct(RequestStack $requestStack, FormFactoryInterface $formFacotry, 
         UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $entityManager, 
         SessionInterface $session, SimpleFlash $simpleFlash, UploadedManager $uploadedManager,
-        TrickManager $trickManager, ResetPasswordRequestRepository $resetPasswordRequestRepository)
+        TrickManager $trickManager, ResetPasswordRequestRepository $resetPwRepository)
     {
         $this->requestStack = $requestStack;
         $this->formFacotry = $formFacotry;
@@ -36,7 +36,7 @@ class UserHelper
         $this->simpleFlash = $simpleFlash;
         $this->uploadedManager = $uploadedManager;
         $this->trickManager = $trickManager;
-        $this->resetPasswordRequestRepository = $resetPasswordRequestRepository;
+        $this->resetPwRepository = $resetPwRepository;
     }
 
     public function isMakeProcessResetPasswordForm(&$form, User $user) : bool
@@ -101,7 +101,7 @@ class UserHelper
 
         $this->session->invalidate(0);
 
-        $resets = $this->resetPasswordRequestRepository->findBy(['user' => $user]);
+        $resets = $this->resetPwRepository->findBy(['user' => $user]);
         foreach($resets as $reset) {
             $this->entityManager->remove($reset);
         }

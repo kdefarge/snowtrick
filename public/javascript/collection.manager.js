@@ -18,7 +18,7 @@ function addFormToCollection($collection) {
     $collection.append($newForm);
     addTagFormDeleteLink($newForm);
 
-    var $input = $newForm.find("[type=file]")
+    var $input = $newForm.find("[type=file]");
 
     $input.change( function(event) {
         let inputFile = event.currentTarget;
