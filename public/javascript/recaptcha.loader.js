@@ -1,10 +1,10 @@
 var $htmlElement = $("#html_element");
 if($htmlElement.length) {
 
-    var public_key = $htmlElement.attr("data-public-key");
+    var publicKey = $htmlElement.attr("data-public-key");
     var onloadCallback = function() {
         grecaptcha.render("html_element", {
-            "sitekey" : public_key
+            "sitekey" : publicKey
         });
     };
     

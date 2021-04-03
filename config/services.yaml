@@ -6,8 +6,8 @@
 parameters:
     upload_directory: '%kernel.project_dir%/public/uploads/'
     upload_asset: '/uploads/'
-    recaptcha_public: '%env(string:resolve:RECAPTCHA_PUBLIC)%'
-    recaptach_key: '%env(string:resolve:RECAPTCHA_KEY)%'
+    recaptcha_public: '%env(string:RECAPTCHA_PUBLIC)%'
+    recaptach_key: '%env(string:RECAPTCHA_KEY)%'
 services:
     # default configuration for services in *this* file
     _defaults:
