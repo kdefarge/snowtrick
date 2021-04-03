@@ -61,3 +61,6 @@ form:
       title: Réinitialisez votre mot de passe
       button: Réinitialiser le mot de passe
       linknovalid: Un problème est survenu lors de la validation de votre demande de réinitialisation
+flash:
+  warning:
+    recaptcha: Êtes-vous un robot ? merci d'effectuer la vérification anti-robot.

@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ResetPasswordRequestFormType;
+use App\Service\Recaptcha;
+use App\Service\SimpleFlash;
 use App\Service\UserHelper;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,16 +38,25 @@ class ResetPasswordController extends AbstractController
      *
      * @Route("", name="app_forgot_password_request")
      */
-    public function request(Request $request, MailerInterface $mailer): Response
-    {
+    public function request(Request $request, MailerInterface $mailer, Recaptcha $recaptcha, SimpleFlash $simpleFlash): Response
+    {        
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            return $this->processSendingPasswordResetEmail(
-                $form->get('username')->getData(),
-                $mailer
-            );
+        if ($form->isSubmitted()) {
+
+            $recaptchaResponse = $recaptcha->verifying();
+                
+            if(!$recaptchaResponse) {
+                $simpleFlash->typeDanger('flash.warning.recaptcha');
+            }
+
+            if ($form->isValid() && $recaptchaResponse) {
+                return $this->processSendingPasswordResetEmail(
+                    $form->get('username')->getData(),
+                    $mailer
+                );
+            }
         }
 
         return $this->render('reset_password/request.html.twig', [

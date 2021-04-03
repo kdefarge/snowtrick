@@ -20,10 +20,16 @@ composer install
 *   update .env file
 
 ```bash
+# Config database
 # MariaDB (dont forget version X.X.X with your version)
 DATABASE_URL="mysql://USER:PASSWRD@SERVER:PORT/DB_NAME?serverVersion=mariadb-X.X.X"
+# Config mailer
 # Mail is send when create account and reset password
 MAILER_DSN=smtp://USER:PASSWORD@SERVER_SMTP:PORT
+# Config Recpatcha
+# Recaptcha is used for register and reset password
+RECAPTCHA_PUBLIC="Your public key"
+RECAPTCHA_KEY="Your secret key"
 ```
 
 *   install database
