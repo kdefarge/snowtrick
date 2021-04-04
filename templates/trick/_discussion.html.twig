@@ -18,7 +18,7 @@
     {% endif %}
 
     <div class="row justify-content-md-center text-left">
-        <div class="col col-lg-8 mt-3 pt-3 border-top" id="discussions">
+        <div class="col col-lg-8 mt-3 pt-3 border-top fake-loader" id="discussions" data-fakeloader-number="10">
             {% for discussion in discussions %}
             <div class="discussion-message">
             <div class="d-flex">
@@ -35,7 +35,7 @@
             </div>
             </div>
             {% else %}
-                Pas de discussion
+                Il n'y a pas de discussion
             {% endfor %}
         </div>
     </div>

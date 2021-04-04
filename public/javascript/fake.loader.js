@@ -1,23 +1,26 @@
-var discussionMax = 5;
-var $messageCollection = $("#discussions .discussion-message");
-if($messageCollection.length > discussionMax) {
-    var currentLoaded = discussionMax;
-    for (var i = discussionMax; i < $messageCollection.length; i++) {
-        $($messageCollection.get(i)).hide();
-    }
-    var $extendButton = $("<button class=\"btn btn-primary btn-lg active\" type=\"button\">Charger plus</button>");
-    $extendButton.on("click", function(e) {
-        for (var i = currentLoaded; i < currentLoaded+discussionMax; i++) {
-            var current = $messageCollection.get(i);
-            if(!current) {
-                break;
+$(".fake-loader").each(function( index, collection ) {
+    var $collection = $(collection);
+    var itemMax = $collection.data("fakeloader-number");
+    itemMax = (itemMax)?parseInt(itemMax):5;
+    var $elements = $collection.children();
+    if($elements.length > itemMax) {
+        var currentLoaded = itemMax;
+        for (var i = itemMax; i < $elements.length; i++) {
+            $($elements.get(i)).hide();
+        }
+        var $extendButton = $("<div class=\"text-center col-12\"><button class=\"btn btn-primary btn-lg active\" type=\"button\">Charger plus</button></div>");
+        $extendButton.on("click", function(e) {
+            if($elements.length > currentLoaded+itemMax) {
+                for (var i = currentLoaded; i < currentLoaded+itemMax; i++) {
+                    var current = $elements.get(i);
+                    $(current).show();
+                }
+                currentLoaded+=itemMax;
+            } else {
+                $elements.show();
+                this.remove();
             }
-            $(current).show();
-        }
-        currentLoaded+=discussionMax;
-        if(currentLoaded>=$messageCollection.length) {
-            this.remove();
-        }
-    });
-    $("#discussions").append($extendButton);
-}
+        });
+        $collection.after($extendButton);
+    }
+});

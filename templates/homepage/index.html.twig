@@ -21,16 +21,8 @@
 </header>
 
 <div id="tricks" class="container-fluid p-0 text-center pb-2">
-    <div class="row row-cols-1 row-cols-lg-4 row-cols-xl-5 m-2">
-        
-        {%  set trickCounter = 0 %}
+    <div class="row row-cols-1 row-cols-lg-4 row-cols-xl-5 m-2 fake-loader" data-fakeloader-number="15">
         {% for trick in tricks %}
-        {% set trickCounter = trickCounter + 1%}
-        {% if trickCounter == 16 %}
-    </div>
-    <div class="collapse" id="collapseMoreTricks">
-    <div class="row row-cols-1 row-cols-lg-4 row-cols-xl-5 m-2">
-        {% endif %}
         <div class="col">
             <div class="border mb-4">
                 <img src="{{ trick.featured_media ? upload_asset ~ trick.featured_media.link : asset('images/no-image.png') }}" class="medias__img" alt="">
@@ -50,17 +42,9 @@
             </div>
         </div>
         {% else %}
-            Patrick
+            Il n'y a pas de trick
         {% endfor %}
-        
-    </div>
-    {% if trickCounter > 15 %}
-    </div>
-    {% endif %}
-    {% if trickCounter > 15 %}
-    <a href="#collapseMoreTricks" class="btn btn-primary btn-lg active" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseMoreTricks">Charger plus</a>
-    {% endif %}
-    
+    </div>    
 </div>
 
 <div class="container-fluid text-right">
