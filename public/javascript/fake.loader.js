@@ -1,7 +1,7 @@
 $(".fake-loader").each(function( index, collection ) {
     var $collection = $(collection);
     var itemMax = $collection.data("fakeloader-number");
-    itemMax = (itemMax)?parseInt(itemMax):5;
+    itemMax = (itemMax)?parseInt(itemMax,10):5;
     var $elements = $collection.children();
     if($elements.length > itemMax) {
         var currentLoaded = itemMax;
