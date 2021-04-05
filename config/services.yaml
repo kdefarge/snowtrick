@@ -8,6 +8,7 @@ parameters:
     upload_asset: '/uploads/'
     recaptcha_public: '%env(string:RECAPTCHA_PUBLIC)%'
     recaptach_key: '%env(string:RECAPTCHA_KEY)%'
+    fixtures_directory: '%kernel.project_dir%/fixtures/'
 services:
     # default configuration for services in *this* file
     _defaults:

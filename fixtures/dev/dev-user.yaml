@@ -1,8 +1,24 @@
+parameters:
+  password: 'toctoc'
+  imageNames:
+    - "cat.svg"
+    - "coffee1.svg"
+    - "coffee2.svg"
+    - "medal.svg"
+    - "skier1.svg"
+    - "skier2.svg"
+    - "snowboard.svg"
+    - "snowboarder1.svg"
+    - "snowboarder2.svg"
+    - "snowboarder3.svg"
+
 App\Entity\User:
   user_{1..20}:
     username (unique): <username()>
     email (unique): <email()>
-    password: <helpEncodePassword('toctoc')>
-    picture_link: <imageUrl(200,200, 'cats', true, 'Faker')>
+    password: <helpEncodePassword(<{password}>)>
+    picture_link: '80%? <userPicture(<{imageNames}>)>'
     created_date: <dateTime()>
     updated_date: <dateTime()>
+    firstname: <firstName()>
+    lastname: <lastName()>

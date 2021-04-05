@@ -1,7 +1,15 @@
+parameters:
+  categoryNames:
+    - "Les grabs"
+    - "Les rotations"
+    - "Les flips"
+    - "Les rotations désaxées"
+    - "Les slides"
+
 App\Entity\Trick:
-  trick_{1..50}:
-    user: '@user_<numberBetween(1,20)>'
-    category: '@category_<numberBetween(1,10)>'
+  trick_{1..25}:
+    user: '@user_*'
+    category: '<findOrCreateCategory(<randomElement(<{categoryNames}>)>)>'
     name (unique): <word()>
     content: <paragraph(10,true)>
     created_date: <dateTime()>

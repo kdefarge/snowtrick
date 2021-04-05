@@ -7,6 +7,7 @@ use App\Entity\Media;
 use App\Entity\Trick;
 use App\Form\DiscussionFormType;
 use App\Repository\DiscussionRepository;
+use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use App\Service\MediaHelper;
 use App\Service\TrickManager;
@@ -185,5 +186,23 @@ class TrickController extends AbstractController
         }
 
         return $this->redirectToRoute('trick_show', ['slug' => $trick->getName(), '_fragment' => 'discussion-area']);
+    }
+    
+    /**
+     * @Route("/checkcover", name="trick_checkcover", methods={"GET"})
+     */
+    public function checkcover(TrickRepository $trickRepository, MediaRepository $mediaRepository): Response
+    {
+        $tricks = $trickRepository->findAll();
+        foreach($tricks as $trick) {
+            $media = $mediaRepository->findOneBy(['trick' => $trick, 'isVideoLink' => false]);
+            if ($media instanceof Media) {
+                $trick->setFeaturedMedia($media);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($trick);
+                $entityManager->flush();
+            }
+        }
+        return $this->redirectToRoute('homepage', ['_fragment' => 'tricks']);
     }
 }

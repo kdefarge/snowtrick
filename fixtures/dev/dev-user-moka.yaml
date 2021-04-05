@@ -1,6 +1,9 @@
+parameters:
+  password: 'toctoc'
+
 App\Entity\User:
   moka:
     username (unique): 'moka'
     email (unique): 'kdefarge@gmail.com'
-    password: <helpEncodePassword('toctoc')>
-    picture_link: <imageUrl(200,200, 'cats', true, 'Faker')>
+    password: <helpEncodePassword(<{password}>)>
+    picture_link: '<userPicture(<{imageNames}>)>'

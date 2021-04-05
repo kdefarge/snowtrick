@@ -1,4 +1,34 @@
+parameters:
+  mediaImageName:
+    - "image1.jpg"
+    - "image2.jpg"
+    - "image3.jpg"
+    - "image4.jpg"
+    - "image5.jpg"
+    - "image6.jpg"
+    - "image7.jpg"
+    - "image8.jpg"
+    - "image9.jpg"
+    - "image10.jpg"
+    - "image11.jpg"
+    - "image12.jpg"
+  videoLinks:
+    - "https://www.youtube.com/watch?v=V9xuy-rVj9w"
+    - "https://www.youtube.com/watch?v=GS9MMT_bNn8"
+    - "https://www.youtube.com/watch?v=t705_V-RDcQ"
+    - "https://www.youtube.com/watch?v=tHHxTHZwFUw"
+    - "https://www.dailymotion.com/video/x80blet"
+    - "https://www.dailymotion.com/video/x6bqp5t"
+    - "https://www.dailymotion.com/video/xnltrc"
+    - "https://vimeo.com/28591756"
+    - "https://vimeo.com/77477140"
+    - "https://vimeo.com/11823266"
+
 App\Entity\Media:
-  media_{1..200}:
-    trick: '@trick_<numberBetween(1,50)>'
-    link: <imageUrl(1920,1080, 'media', true)>
+  media_{1..100}:
+    trick: "@trick_*"
+    link: <trickPicture(<{mediaImageName}>)>
+  media_{101..150}:
+    trick: "@trick_*"
+    link: <embedLinkMaker(<randomElement(<{videoLinks}>)>)>
+    isVideoLink: true
