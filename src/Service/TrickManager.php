@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * A service to create, modify and delete media in the database
+ *
+ * @author     Kevin DEFARGE <kdefarge@gmail.com>
+ */
+
 namespace App\Service;
 
 use App\Entity\Category;
@@ -20,13 +26,17 @@ class TrickManager
     private $requestStack;
     private $formFacotry;
     private $mediaRepository;
-    
-    public function __construct(EntityManagerInterface $entityManager,
-        UploadedManager $uploadedManager, MediaHelper $mediaHelper,
-        EmbedLinkMaker $embedLinkMaker, CategoryHelper $categoryHelper,
-        RequestStack $requestStack, FormFactoryInterface $formFacotry,
-        MediaRepository $mediaRepository)
-    {
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UploadedManager $uploadedManager,
+        MediaHelper $mediaHelper,
+        EmbedLinkMaker $embedLinkMaker,
+        CategoryHelper $categoryHelper,
+        RequestStack $requestStack,
+        FormFactoryInterface $formFacotry,
+        MediaRepository $mediaRepository
+    ) {
         $this->entityManager = $entityManager;
         $this->uploadedManager = $uploadedManager;
         $this->embedLinkMaker = $embedLinkMaker;
@@ -37,14 +47,21 @@ class TrickManager
         $this->mediaRepository = $mediaRepository;
     }
 
-    public function new(Trick $trick) : ?Form
+    /**
+     * Create a trick in the database from the form
+     *
+     * @param Trick $trick the trick that will retrieve the data from the form and be added to the database
+     * 
+     * @return null|form return the form if it is not valid
+     */
+    public function new(Trick $trick): ?Form
     {
         $form = $this->formProcess($trick);
-        if($form instanceof Form)
+        if ($form instanceof Form)
             return $form;
-        
+
         $media = $this->mediaRepository->findOneBy(['trick' => $trick, 'isVideoLink' => false]);
-        if($media instanceof Media) {
+        if ($media instanceof Media) {
             $trick->setFeaturedMedia($media);
             $this->entityManager->persist($trick);
             $this->entityManager->flush();
@@ -53,19 +70,33 @@ class TrickManager
         return null;
     }
 
-    public function edit(Trick $trick) : ?Form
+    /**
+     * Update a trick in the database from the form
+     *
+     * @param Trick $trick the trick that will retrieve the data from the form and update the database
+     * 
+     * @return null|form return the form if it is not valid
+     */
+    public function edit(Trick $trick): ?Form
     {
         $category = $trick->getCategory();
 
         $form = $this->formProcess($trick);
-        if($form instanceof Form)
+        if ($form instanceof Form)
             return $form;
-        
+
         $this->categoryHelper->deleteNotUsedCategory($category);
 
         return null;
     }
 
+    /**
+     * Destroy the trick and the linked data in the database
+     *
+     * @param Trick $trick The trick that will be deleted
+     * 
+     * @return null|form return the form if it is not valid
+     */
     public function delete(Trick $trick)
     {
         $trick->setFeaturedMedia(null);
@@ -80,33 +111,33 @@ class TrickManager
         $this->categoryHelper->deleteNotUsedCategory($category);
     }
 
-    private function formProcess(Trick $trick) : ?Form
-    {        
+    private function formProcess(Trick $trick): ?Form
+    {
         $form = $this->formFacotry->create(TrickType::class, $trick);
         $form->handleRequest($this->requestStack->getCurrentRequest());
 
         if (!$form->isSubmitted() || !$form->isValid())
             return $form;
-        
+
         $this->entityManager->persist($trick);
         $this->entityManager->flush();
-        
+
         $newcategory = $form->get('newcategory')->getData();
-        
-        if('' !== $newcategory && null !== $newcategory) {
+
+        if ('' !== $newcategory && null !== $newcategory) {
 
             $category = $this->categoryHelper->findOrCreateCategory($newcategory);
 
-            if($category instanceof Category) {
+            if ($category instanceof Category) {
                 $trick->setCategory($category);
                 $this->entityManager->persist($trick);
                 $this->entityManager->flush();
             }
         }
-        
+
         $uploadedCollection = $form->get('pictures')->getData();
         $this->mediaHelper->newImage($uploadedCollection, $trick);
-        
+
         $linkCollection = $form->get('videolinks')->getData();
         $this->mediaHelper->newVideo($linkCollection, $trick);
 

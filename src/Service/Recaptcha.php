@@ -1,9 +1,13 @@
 <?php
 
-/*
+/**
+ * Recaptcha verification
  *
- * (c) Kevin DEFARGE <kdefarge@gmail.com>
- * 
+ * A service to verify the Recaptcha
+ *
+ * @author     Kevin DEFARGE <kdefarge@gmail.com>
+ * @link       https://developers.google.com/recaptcha/docs/verify
+ * @link       https://symfony.com/doc/current/http_client.html
  */
 
 namespace App\Service;
@@ -27,35 +31,29 @@ class Recaptcha
     }
 
     /**
-     * Checking the recaptcha by contacting the google api
-     * https://developers.google.com/recaptcha/docs/verify
-     * https://symfony.com/doc/current/http_client.html
+     * Recaptcha verification
+     * 
+     * Retrieve the information sent by the customer and contact the google 
+     * API to check if the customer has validated the Recaptcha
      *
      * @return bool
-     *
-     * @throws DecodingExceptionInterface    When the body cannot be decoded to an array
-     * @throws TransportExceptionInterface   When a network error occurs
-     * @throws RedirectionExceptionInterface On a 3xx when $throw is true and the "max_redirects" option has been reached
-     * @throws ClientExceptionInterface      On a 4xx when $throw is true
-     * @throws ServerExceptionInterface      On a 5xx when $throw is true
-     * @throws ParameterNotFoundException if the parameter is not defined
      */
     public function verifying(): bool
     {
         $gRecaptchaResponse = $this->requestStack->getCurrentRequest()->request->get('g-recaptcha-response');
 
-        if(!$gRecaptchaResponse)
+        if (!$gRecaptchaResponse)
             return false;
 
         $secretKey = $this->params->get('recaptach_key');
-        
+
         /**
          * POST Parameter	Description
          * secret	        Required. The shared key between your site and reCAPTCHA.
          * response	        Required. The user response token provided by the reCAPTCHA client-side integration on your site.
          * remoteip	        Optional. The user's IP address.
          */
-        
+
         $formData = new FormDataPart([
             ['secret' => $secretKey],
             ['response' => $gRecaptchaResponse],
@@ -74,7 +72,7 @@ class Recaptcha
             return false;
 
         $content = $response->toArray();
-        
+
         /**
          * "success": true|false,
          * "challenge_ts": timestamp,  - timestamp of the challenge load (ISO format yyyy-MM-dd'T'HH:mm:ssZZ)
@@ -84,7 +82,7 @@ class Recaptcha
 
         if (isset($content['success']))
             return $content['success'];
-        
+
         return false;
     }
 }
