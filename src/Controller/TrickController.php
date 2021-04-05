@@ -200,9 +200,9 @@ class TrickController extends AbstractController
                 $trick->setFeaturedMedia($media);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($trick);
-                $entityManager->flush();
             }
         }
+        $entityManager->flush();
         return $this->redirectToRoute('homepage', ['_fragment' => 'tricks']);
     }
 }
