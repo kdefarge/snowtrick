@@ -28,7 +28,10 @@
         <p class="card-text text-justify text-break">{{ trick.content ? trick.content : '' }}</p>
     </div>
     <div class="card-footer text-muted">
-        Auteur : {{ trick.user.username ? trick.user.username : '' }} - Catégories : {{ trick.category.name ? trick.category.name : '' }} - {{ trick.createdDate ? trick.createdDate|date('Y-m-d H:i:s') : '' }} - {{ trick.updatedDate ? trick.createdDate|date('Y-m-d H:i:s') : '' }}
+        Auteur : {{ trick.user.lastname ? (trick.user.firstname ? trick.user.firstname ~ ' ' : '') ~ trick.user.lastname : 'inconnue' }} - 
+        Catégories : {{ trick.category.name ? trick.category.name : '' }} - 
+        Publié le {{ trick.createdDate ? trick.createdDate|date('d-m-y à H\\Hi', "Europe/Paris") : '' }} - 
+        Mis à jour le {{ trick.updatedDate ? trick.updatedDate|date('d-m-y à H\\Hi', "Europe/Paris") : '' }}
     </div>
 </div>
 
