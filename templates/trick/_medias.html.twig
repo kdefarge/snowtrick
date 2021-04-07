@@ -13,7 +13,7 @@
                         </div>
                     </div>
                 {% else %}
-                    <a href="#" class="col flex-grow-1 d-flex align-items-center justify-content-center px-0"><img src="{{ upload_asset ~ media.link }}" class="medias__img" alt=""></a>
+                    <a href="#" class="col flex-grow-1 d-flex align-items-center justify-content-center px-0 image-zoom"><img src="{{ upload_asset ~ media.link }}" class="medias__img" alt=""></a>
                 {% endif %}
                 {% if is_granted('owner', trick.user) %}
                     <div class="d-flex justify-content-end w-100">
