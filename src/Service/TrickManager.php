@@ -26,6 +26,7 @@ class TrickManager
     private $requestStack;
     private $formFacotry;
     private $mediaRepository;
+    private $simpleFlash;
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -35,7 +36,8 @@ class TrickManager
         CategoryHelper $categoryHelper,
         RequestStack $requestStack,
         FormFactoryInterface $formFacotry,
-        MediaRepository $mediaRepository
+        MediaRepository $mediaRepository,
+        SimpleFlash $simpleFlash
     ) {
         $this->entityManager = $entityManager;
         $this->uploadedManager = $uploadedManager;
@@ -45,6 +47,7 @@ class TrickManager
         $this->requestStack = $requestStack;
         $this->formFacotry = $formFacotry;
         $this->mediaRepository = $mediaRepository;
+        $this->simpleFlash = $simpleFlash;
     }
 
     /**
@@ -119,9 +122,6 @@ class TrickManager
         if (!$form->isSubmitted() || !$form->isValid())
             return $form;
 
-        $this->entityManager->persist($trick);
-        $this->entityManager->flush();
-
         $newcategory = $form->get('newcategory')->getData();
 
         if ('' !== $newcategory && null !== $newcategory) {
@@ -130,10 +130,16 @@ class TrickManager
 
             if ($category instanceof Category) {
                 $trick->setCategory($category);
-                $this->entityManager->persist($trick);
-                $this->entityManager->flush();
             }
         }
+        
+        if(!$trick->getCategory()) {
+            $this->simpleFlash->typeDanger('trick.flash.error.nocategory');
+            return $form;
+        }
+
+        $this->entityManager->persist($trick);
+        $this->entityManager->flush();
 
         $uploadedCollection = $form->get('pictures')->getData();
         $this->mediaHelper->newImage($uploadedCollection, $trick);

@@ -39,6 +39,9 @@ trick:
   button:
     addimage: Ajouter une image supplémentaire
     addlink: Ajouter un lien supplémentaire
+  flash:
+    error:
+      nocategory: Il faut choisir une catégorie
 discussion:
   label:
     message: Votre message
