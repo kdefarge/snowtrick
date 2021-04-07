@@ -82,6 +82,8 @@ class TrickManager
      */
     public function edit(Trick $trick): ?Form
     {
+        $trick->setUpdatedDate(new \DateTime());
+
         $category = $trick->getCategory();
 
         $form = $this->formProcess($trick);

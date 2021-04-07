@@ -25,7 +25,7 @@
                 <img src="{{ discussion.user.pictureLink ? upload_asset ~ discussion.user.pictureLink : asset('images/no-image.png') }}" class="mr-3 imgDiscussion" alt="" />
                 <p class="border flex-grow-1 p-2">
                     <span class="text-muted">
-                        {{ discussion.user.username }} - {{ discussion.createdDate|date('Y-m-d H:i:s') }}
+                        {{ discussion.user.username }} - {{ discussion.createdDate|date('d-m-y à H\\Hi', "Europe/Paris") }}
                         {% if is_granted('owner', discussion.user) %}
                         <a href="#" onclick="deleteMessage('{{ path('discussion_delete', {'id': discussion.id}) }}');return false;"><img src="{{ asset('images/theme/b-delete.svg') }}" class="d-inline-block imgMenu m-2" alt="" /></a>
                         {% endif %}
