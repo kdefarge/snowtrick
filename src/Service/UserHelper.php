@@ -72,6 +72,7 @@ class UserHelper
                 $form->get('plainPassword')->getData()
             );
 
+            $user->setIsVerified(true);
             $user->setPassword($encodedPassword);
             $this->entityManager->flush();
 
