@@ -1,6 +1,6 @@
 var $modal = $("#image-zoom");
 if($modal.length) {
-    var $imageMediaLink = $("#medias a").parent();
+    var $imageMediaLink = $(".image-zoom");
     $imageMediaLink.click( function (e) {
         var $target = $(e.target);
         var src = $target.attr("src");
