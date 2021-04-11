@@ -67,3 +67,5 @@ form:
 flash:
   warning:
     recaptcha: Êtes-vous un robot ? merci d'effectuer la vérification anti-robot.
+  error:
+    mail: Un problème est survenue lors de l'envoie de l'adresse mail, merci d'essayer ultérieurement
