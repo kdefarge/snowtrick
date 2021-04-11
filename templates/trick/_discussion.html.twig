@@ -22,7 +22,7 @@
             {% for discussion in discussions %}
             <div class="discussion-message">
             <div class="d-flex">
-                <img src="{{ discussion.user.pictureLink ? upload_asset ~ discussion.user.pictureLink : asset('images/no-image.png') }}" class="mr-3 imgDiscussion" alt="" />
+                <img src="{{ asset(discussion.user.pictureLink ? upload_asset ~ discussion.user.pictureLink : 'images/no-image.png') }}" class="mr-3 imgDiscussion" alt="" />
                 <p class="border flex-grow-1 p-2">
                     <span class="text-muted">
                         {{ discussion.user.username }} - {{ discussion.createdDate|date('d-m-y à H\\Hi', "Europe/Paris") }}

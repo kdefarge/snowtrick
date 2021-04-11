@@ -6,7 +6,7 @@
 
 <div  id="content" class="border border-bottom-0 text-center pb-5">
 				
-<div class="trick__header d-flex flex-column justify-content-between bg-secondary py-2" style="background-image: url({{ trick.featuredMedia ? upload_asset ~ trick.featuredMedia.link : asset('images/no-image.png') }});">
+<div class="trick__header d-flex flex-column justify-content-between bg-secondary py-2" style="background-image: url({{ asset(trick.featuredMedia ? upload_asset ~ trick.featuredMedia.link : 'images/no-image.png') }});">
         
     <div class="align-self-end bg-light mr-2">
         {% if is_granted('owner', trick.user) %}

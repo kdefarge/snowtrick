@@ -25,7 +25,7 @@
         {% for trick in tricks %}
         <div class="col">
             <div class="border mb-4">
-                <img src="{{ trick.featured_media ? upload_asset ~ trick.featured_media.link : asset('images/no-image.png') }}" class="medias__img" alt="">
+                <img src="{{ asset(trick.featured_media ? upload_asset ~ trick.featured_media.link : 'images/no-image.png') }}" class="medias__img" alt="">
                 <div class="d-flex justify-content-end">
                     <a class="flex-grow-1 align-self-center ml-2 text-break" href="{{ path('trick_show', {'slug': trick.name}) }}">
                         {{ trick.name }}
