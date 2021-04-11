@@ -17,7 +17,7 @@
                     <h2 class="mb-3 text-center">{{ 'user.title.picture'|trans }}</h2>
                 </div>
                 <div class="col-10 col-sm-8 col-md-7 col-lg-5 border text-center bg-light py-3 px-sm-5">
-                    <img src="{{ app.user.pictureLink ? upload_asset ~ app.user.pictureLink : asset('images/no-image.png') }}" class="rounded-circle" width="200px" height="200px" alt="">
+                    <img src="{{ asset(app.user.pictureLink ? upload_asset ~ app.user.pictureLink : 'images/no-image.png') }}" class="rounded-circle" width="200px" height="200px" alt="">
                     <br />
                     <a class="btn btn-danger my-2" href="{{ path('user_delete_profilpicture') }}" role="button">Supprimer</a>
                     {{ form_widget(form_profilpicture) }}
