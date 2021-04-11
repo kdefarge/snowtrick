@@ -22,9 +22,11 @@ class TrickType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'trick.label.name',
+                'required' => false,
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'trick.label.content',
+                'required' => false,
             ])
             ->add('newcategory', TextType::class, [
                 'label' => 'trick.label.newcategory',
